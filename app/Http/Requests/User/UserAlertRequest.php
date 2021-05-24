@@ -26,9 +26,9 @@ class UserAlertRequest extends FormRequest
     public function rules()
     {
         return [
-            'exchange_id' => [
+            'broker_id' => [
                 'required',
-                Rule::exists('exchanges','id')
+                Rule::exists('brokers','id')
             ],
             'symbol' => ['required'],
             'operator' => [
