@@ -19,3 +19,7 @@ Route::get('/', function () {
 });
 
 Route::resource('/alert','User\UserAlertController');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
