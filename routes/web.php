@@ -18,7 +18,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('/alert','User\UserAlertController');
+Route::middleware('auth')->group(function () {
+    Route::resource('/alert','User\UserAlertController');
+});
 
 Auth::routes();
 

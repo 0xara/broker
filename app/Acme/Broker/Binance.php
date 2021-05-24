@@ -12,8 +12,6 @@ class Binance
      */
     public static function getSymbols()
     {
-        return ['BTCUSDT','BNBUSDT'];
-
         $http = \Http::get('https://api.binance.com/api/v3/exchangeInfo');
         $response = $http->json();
 
