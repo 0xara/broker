@@ -21,7 +21,7 @@
                     <select name="symbol" class="block w-full mt-1 form-select"  @change="onSymbolChange($event)">
                         <option value="">select symbol</option>
                         @foreach($symbols as $symbol)
-                            @if(old('symbol', $alert->symbol) == $key)
+                            @if(old('symbol', $alert->symbol) == $symbol)
                                 <option value="{{$symbol}}" selected>{{$symbol}}</option>
                             @else
                                 <option value="{{$symbol}}">{{$symbol}}</option>
