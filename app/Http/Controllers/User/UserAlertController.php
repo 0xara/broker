@@ -105,6 +105,19 @@ class UserAlertController extends Controller
         $user = auth()->user();
         $alert = $user->alerts()->findOrFail($id);
 
+        $price = Binance::getSymbolPrice($request->input('symbol'));
+
+        if(!$price)
+            throw ValidationException::withMessages(['']);
+
+        if(in_array($request->input('operator'),[Alert::GT,Alert::GTE, Alert::CROSS])) {
+            $alert->current_position = $request->input('price') < $price ? Alert::DOWN_POSITION : Alert::UP_POSITION;
+        }
+
+        if(in_array($request->input('operator'),[Alert::LT,Alert::LTE, Alert::CROSS])) {
+            $alert->current_position = $request->input('price') > $price ? Alert::UP_POSITION : Alert::DOWN_POSITION;
+        }
+
         $alert->update($request->validated());
 
         return \Redirect::action('User\UserAlertController@edit',[$alert->getKey()]);
