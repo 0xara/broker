@@ -4,7 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Acme\Broker\Binance;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\UserAlertRequest;
+use App\Http\Requests\User\UserAlertRequest;
 use App\Models\Alert;
 use App\Models\User;
 use Illuminate\Http\Request;

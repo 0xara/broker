@@ -42,17 +42,9 @@
                         @endforeach
                     </select>
                 </label>
-                <label class="block mb-5" v-if="operator && operator!='{{\App\Models\Alert::BETWEEN}}'" v-cloak>
+                <label class="block mb-5">
                     <span class="text-gray-700">Price</span>
                     <input type="text" name="price" class="mt-1 block w-full form-input" value="{{old('price', $alert->price)}}">
-                </label>
-                <label class="block mb-5" v-if="operator && operator=='{{\App\Models\Alert::BETWEEN}}'" v-cloak>
-                    <span class="text-gray-700">Max</span>
-                    <input type="text" name="max" class="mt-1 block w-full form-input" value="{{old('max', $alert->max}}">
-                </label>
-                <label class="block mb-5" v-if="operator && operator=='{{\App\Models\Alert::BETWEEN}}'" v-cloak>
-                    <span class="text-gray-700">Min</span>
-                    <input type="text" name="min" class="mt-1 block w-full form-input" value="{{old('min', $alert->min}}">
                 </label>
             </form>
         </div>

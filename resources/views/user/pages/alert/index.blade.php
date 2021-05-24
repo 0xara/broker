@@ -15,8 +15,6 @@
                 <th class="border">symbol</th>
                 <th class="border">operator</th>
                 <th class="border">price</th>
-                <th class="border">min</th>
-                <th class="border">max</th>
                 <th class="border">active</th>
             </tr>
             </thead>
@@ -26,8 +24,6 @@
                 <td class="border">{{$alert->symbol}}</td>
                 <td class="border">{{$alert->operator}}</td>
                 <td class="border">{{$alert->price}}</td>
-                <td class="border">{{$alert->min}}</td>
-                <td class="border">{{$alert->max}}</td>
                 <td class="border">{{$alert->active}}</td>
             </tr>
             @endforeach

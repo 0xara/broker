@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\User;
 
 use App\Models\Alert;
 use Illuminate\Foundation\Http\FormRequest;
@@ -25,14 +25,6 @@ class UserAlertRequest extends FormRequest
      */
     public function rules()
     {
-        if($this->input('operator') != Alert::BETWEEN) {
-            $this->request->remove("max");
-            $this->request->remove("min");
-        }
-        else{
-            $this->request->remove("price");
-        }
-
         return [
             'exchange_id' => [
                 'required',
@@ -44,21 +36,7 @@ class UserAlertRequest extends FormRequest
                 Rule::in(array_keys(Alert::OPERATOR_TITLES))
             ],
             'price' => [
-                Rule::requiredIf(function () {
-                    return $this->input('Operator') != Alert::BETWEEN;
-                })
-            ],
-            'max' => [
-                Rule::requiredIf(function () {
-                    return $this->input('Operator') == Alert::BETWEEN;
-                }),
-                'numeric',
-            ],
-            'min' => [
-                Rule::requiredIf(function () {
-                    return $this->input('Operator') == Alert::BETWEEN;
-                }),
-                'numeric'
+                'required'
             ]
         ];
     }
