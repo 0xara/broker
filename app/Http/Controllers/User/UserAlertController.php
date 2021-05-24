@@ -27,10 +27,16 @@ class UserAlertController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function create()
+    public function create(Request $request)
     {
+        $symbols = Binance::getSymbols();
+
+        if(!$symbols->contains($request->old('symbol'))) {
+            $request->flashOnly('symbol');
+        }
+
         return view('user.pages.alert.create')->with([
-            'symbols' => Binance::getSymbols()
+            'symbols' => $symbols
         ]);
     }
 
@@ -81,14 +87,21 @@ class UserAlertController extends Controller
      * @param  int  $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
         /** @var User $user */
         $user = auth()->user();
         $alert = $user->alerts()->findOrFail($id);
+
+        $symbols = Binance::getSymbols();
+
+        if(!$symbols->contains($request->old('symbol'))) {
+            $request->flashOnly('symbol');
+        }
+
         return view('user.pages.alert.edit')->with([
             'alert' => $alert,
-            'symbols' => Binance::getSymbols()
+            'symbols' => $symbols
         ]);
     }
 

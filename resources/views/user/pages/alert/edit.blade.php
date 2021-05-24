@@ -28,7 +28,7 @@
                 <label class="block mb-5">
                     <span class="text-gray-700">symbol</span>
                     <span v-if="currentPrice" class="font-bold" :class="{ 'text-green-700': lastPrice < currentPrice, 'text-red-700': lastPrice > currentPrice }" v-text="'('+currentPrice+')'"></span>
-                    <select name="symbol" class="block w-full mt-1 form-select"  @change="onSymbolChange($event)">
+                    <select name="symbol" class="block w-full mt-1 form-select"  @change="onSymbolChange($event)" ref="symbolInput">
                         <option value="">select symbol</option>
                         @foreach($symbols as $symbol)
                             @if(old('symbol', $alert->symbol) == $symbol)
@@ -72,6 +72,14 @@
                 currentPrice: '',
                 lastPrice: '',
                 operator: ''
+            },
+
+            mounted() {
+                this.$nextTick(() => {
+                    if(this.$refs.symbolInput.value) {
+                        this.setSymbolCurrentPrice(this.$refs.symbolInput.value);
+                    }
+                })
             },
 
             methods: {
