@@ -6,6 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Alert extends \Eloquent
 {
+    protected $fillable = [
+        'broker_id',
+        'symbol',
+        'operator',
+        'current_position',
+        'price',
+        'active',
+    ];
+
     const GT = 'GT';
     const GTE = 'GTE';
     const LT = 'LT';

@@ -21,8 +21,6 @@ class CreateAlertsTable extends Migration
             $table->string('Operator');
             $table->string('current_position');
             $table->decimal('price')->nullable();
-            $table->decimal('min')->nullable();
-            $table->decimal('max')->nullable();
             $table->boolean('active');
             $table->timestamps();
         });
