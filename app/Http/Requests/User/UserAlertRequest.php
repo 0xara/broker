@@ -26,7 +26,7 @@ class UserAlertRequest extends FormRequest
     public function rules()
     {
         $this->merge([
-            'active' => $this->input('active') ? 1 : 0
+            'active' => $this->input('active') == 1 ? 1 : 0
         ]);
 
         return [
