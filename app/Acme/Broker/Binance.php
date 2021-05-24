@@ -4,6 +4,8 @@
 namespace App\Acme\Broker;
 
 
+use Illuminate\Support\Str;
+
 class Binance
 {
 
@@ -26,6 +28,14 @@ class Binance
         $response = $http->json();
 
         return collect($response);
+    }
+
+    public static function getSymbolPrice($symbol)
+    {
+        $http = \Http::get('https://api.binance.com/api/v3/ticker/price?symbol='.Str::upper($symbol));
+        $response = $http->json();
+
+        return $response['price'] ?? null;
     }
 
 }

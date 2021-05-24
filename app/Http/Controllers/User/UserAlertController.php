@@ -8,6 +8,7 @@ use App\Http\Requests\User\UserAlertRequest;
 use App\Models\Alert;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class UserAlertController extends Controller
 {
@@ -41,7 +42,20 @@ class UserAlertController extends Controller
      */
     public function store(UserAlertRequest $request)
     {
+        $price = Binance::getSymbolPrice($request->input('symbol'));
+
+        if(!$price)
+            throw ValidationException::withMessages(['']);
+
         $alert = Alert::make($request->validated());
+
+        if(in_array($request->input('operator'),[Alert::GT,Alert::GTE, Alert::CROSS])) {
+            $alert->current_position = $request->input('price') < $price ? Alert::DOWN_POSITION : Alert::UP_POSITION;
+        }
+
+        if(in_array($request->input('operator'),[Alert::LT,Alert::LTE, Alert::CROSS])) {
+            $alert->current_position = $request->input('price') > $price ? Alert::UP_POSITION : Alert::DOWN_POSITION;
+        }
 
         /** @var User $user */
         $user = auth()->user();
