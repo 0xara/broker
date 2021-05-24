@@ -12,6 +12,15 @@
 <body>
     <div id="app">
         <div class="container m-auto mt-10" style="max-width: 600px;">
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <form action="{{action('User\UserAlertController@store')}}" method="post">
                 @csrf
                 <label class="block mb-5">
