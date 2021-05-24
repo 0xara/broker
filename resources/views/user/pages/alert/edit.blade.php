@@ -60,7 +60,7 @@
                     <div class="mt-2">
                         <div>
                             <label class="inline-flex items-center">
-                                <input type="checkbox" {{old('active',$alert->active) ? 'checked' : ''}}>
+                                <input type="checkbox" name="active" {{old('active',$alert->active) ? 'checked' : ''}}>
                                 <span class="ml-2">Active</span>
                             </label>
                         </div>
