@@ -74,6 +74,7 @@ class WatchBinancePrice extends Command
      */
     public function sendAlertNotification()
     {
+        \Log::info('schedule ping');
         $symbolObjects = Binance::getSymbolsPrices();
 
         /** @var Builder $alerts */
