@@ -8,6 +8,8 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Messages\SlackMessage;
 use Illuminate\Notifications\Notification;
+use NotificationChannels\Telegram\TelegramChannel;
+use NotificationChannels\Telegram\TelegramMessage;
 
 class AlertActivated extends Notification
 {
@@ -34,7 +36,7 @@ class AlertActivated extends Notification
      */
     public function via($notifiable)
     {
-        return ['slack'];
+        return [TelegramChannel::class];
     }
 
     /**
@@ -74,6 +76,12 @@ class AlertActivated extends Notification
     {
         return (new SlackMessage)
             ->to($notifiable->slack_username)
+            ->content("Alert: ".$this->alert->symbol." is ".Alert::OPERATOR_TITLES[$this->alert->operator]." ".$this->alert->price);
+    }
+
+    public function toTelegram($notifiable)
+    {
+        return TelegramMessage::create()
             ->content("Alert: ".$this->alert->symbol." is ".Alert::OPERATOR_TITLES[$this->alert->operator]." ".$this->alert->price);
     }
 }
