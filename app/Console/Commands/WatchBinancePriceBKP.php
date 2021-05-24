@@ -10,7 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Database\Eloquent\Builder;
 
-class WatchBinancePrice extends Command
+class WatchBinancePriceBKP extends Command
 {
     /**
      * The name and signature of the console command.
@@ -81,10 +81,10 @@ class WatchBinancePrice extends Command
         $updateQuery =
             "UPDATE ".($alertTable = Alert::newModelInstance()->getTable()).
             " SET current_position= (" .
-            "CASE WHEN current_position='".Alert::DOWN_POSITION."'".
-            " THEN '".Alert::UP_POSITION."'".
-            " ELSE '".Alert::DOWN_POSITION."'".
-            " END) WHERE ";
+            "CASE WHEN current_position=".Alert::DOWN_POSITION.
+            " THEN ".Alert::UP_POSITION.
+            " ELSE ".Alert::DOWN_POSITION.
+            "END) WHERE ";
 
         foreach ($symbolObjects as $KEY => $symbolObj)
         {
@@ -93,10 +93,12 @@ class WatchBinancePrice extends Command
                 $q->where('symbol','=',$symbolObj['symbol']);
                 $q->whereRaw(
                     "CASE " .
-                    " WHEN Operator='".Alert::GTE."' AND current_position='".Alert::DOWN_POSITION."' THEN price"." <= ".$symbolObj['price'].
-                    " WHEN Operator='".Alert::LTE."' AND current_position='".Alert::UP_POSITION."' THEN price"." >= ".$symbolObj['price'].
-                    //" WHEN Operator='".Alert::CROSS."' AND current_position='".Alert::UP_POSITION."' THEN price"." < ".$symbolObj['price'].
-                    //" WHEN Operator='".Alert::CROSS."' AND current_position='".Alert::DOWN_POSITION."' THEN price"." > ".$symbolObj['price'].
+                    "WHEN Operator=".Alert::GT." AND current_position=".Alert::DOWN_POSITION." THEN price"." > ".$symbolObj['price'].
+                    "WHEN Operator=".Alert::GTE." AND current_position=".Alert::DOWN_POSITION." THEN price"." >= ".$symbolObj['price'].
+                    "WHEN Operator=".Alert::LT." AND current_position=".Alert::UP_POSITION." THEN price"." < ".$symbolObj['price'].
+                    "WHEN Operator=".Alert::LTE." AND current_position=".Alert::UP_POSITION." THEN price"." <= ".$symbolObj['price'].
+                    "WHEN Operator=".Alert::CROSS." AND current_position=".Alert::UP_POSITION." THEN price"." < ".$symbolObj['price'].
+                    "WHEN Operator=".Alert::CROSS." AND current_position=".Alert::DOWN_POSITION." THEN price"." > ".$symbolObj['price'].
                     " ELSE 0 END"
                 );
             });
@@ -104,12 +106,14 @@ class WatchBinancePrice extends Command
             $updateQuery .= $KEY != 0 ? ' OR ' : '';
 
             $updateQuery .= "(" .
-                "symbol='{$symbolObj['symbol']}' AND ".
+                "symbol={$symbolObj['symbol']} AND ".
                 "( CASE " .
-                " WHEN Operator='".Alert::GTE."' AND current_position='".Alert::UP_POSITION."' THEN price"." > ".$symbolObj['price'].
-                " WHEN Operator='".Alert::LTE."' AND current_position='".Alert::DOWN_POSITION."' THEN price"." < ".$symbolObj['price'].
-               // " WHEN Operator='".Alert::CROSS."' AND current_position='".Alert::DOWN_POSITION."' THEN price"." > ".$symbolObj['price'].
-                //" WHEN Operator='".Alert::CROSS."' AND current_position='".Alert::UP_POSITION."' THEN price"." < ".$symbolObj['price'].
+                "WHEN Operator=".Alert::GT." AND current_position=".Alert::UP_POSITION." THEN price"." < ".$symbolObj['price'].
+                "WHEN Operator=".Alert::GTE." AND current_position=".Alert::UP_POSITION." THEN price"." <= ".$symbolObj['price'].
+                "WHEN Operator=".Alert::LT." AND current_position=".Alert::DOWN_POSITION." THEN price"." > ".$symbolObj['price'].
+                "WHEN Operator=".Alert::LTE." AND current_position=".Alert::DOWN_POSITION." THEN price"." >= ".$symbolObj['price'].
+                "WHEN Operator=".Alert::CROSS." AND current_position=".Alert::DOWN_POSITION." THEN price"." > ".$symbolObj['price'].
+                "WHEN Operator=".Alert::CROSS." AND current_position=".Alert::UP_POSITION." THEN price"." < ".$symbolObj['price'].
                 " ELSE 0 END )" .
                 ")";
         }
@@ -117,20 +121,18 @@ class WatchBinancePrice extends Command
         $alerts = $alerts->with('user')->get();
 
         // update alerts that triggered before
-        $updateQuery .= " WHERE {$alertTable}.id NOT in (".$alerts->keys()->join(',').")";
         \DB::statement($updateQuery);
 
-        if(count($alerts)) {
-            \DB::statement(
-                "UPDATE {$alertTable} ".
-                " SET current_position= (".
-                "CASE WHEN current_position='".Alert::DOWN_POSITION."'".
-                " THEN '".Alert::UP_POSITION."'".
-                " ELSE '".Alert::DOWN_POSITION."'".
-                "END) " .
-                "WHERE {$alertTable}.id in (".$alerts->keys()->join(',').")"
-            );
-        }
+        \DB::statement(
+            "UPDATE {$alertTable} ".
+            " SET current_position= (".
+            "CASE WHEN current_position=".Alert::DOWN_POSITION.
+            " THEN ".Alert::UP_POSITION.
+            " ELSE ".Alert::DOWN_POSITION.
+            "END) " .
+            "WHERE {$alertTable}.id in (".$alerts->keys()->join(',').")"
+        );
+
 
         foreach ($alerts as $alert)
         {
