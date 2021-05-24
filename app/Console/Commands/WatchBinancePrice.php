@@ -78,7 +78,7 @@ class WatchBinancePrice extends Command
         $symbolObjects = Binance::getSymbolsPrices();
 
         /** @var Builder $alerts */
-        $alerts = Alert::query();
+        $alerts = Alert::query()->where('active','=',1);
         $updateQuery =
             "UPDATE ".($alertTable = Alert::newModelInstance()->getTable()).
             " SET current_position= (" .

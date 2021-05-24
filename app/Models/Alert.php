@@ -51,7 +51,7 @@ class Alert extends \Eloquent
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function exchange()
+    public function broker()
     {
         return $this->belongsTo(Broker::class, 'exchange_id');
     }

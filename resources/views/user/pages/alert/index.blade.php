@@ -8,7 +8,7 @@
 </head>
 <body>
     <div class="container m-auto mt-10" style="max-width: 600px;">
-        <table class="border-collapse border">
+        <table class="border-collapse border w-full">
             <thead>
             <tr>
                 <th class="border">broker</th>
@@ -20,7 +20,7 @@
             </thead>
             @foreach($alerts as $alert)
             <tr>
-                <td class="border">{{$alert->broker}}</td>
+                <td class="border">{{$alert->broker->name}}</td>
                 <td class="border">{{$alert->symbol}}</td>
                 <td class="border">{{$alert->operator}}</td>
                 <td class="border">{{$alert->price}}</td>
