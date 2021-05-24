@@ -117,7 +117,7 @@ class WatchBinancePrice extends Command
         $alerts = $alerts->with('user')->get();
 
         // update alerts that triggered before
-        $updateQuery .= " WHERE {$alertTable}.id NOT in (".$alerts->keys()->join(',').")";
+        if(count($alerts)) $updateQuery .= " WHERE {$alertTable}.id NOT in (".$alerts->keys()->join(',').")";
         \DB::statement($updateQuery);
 
         if(count($alerts)) {
