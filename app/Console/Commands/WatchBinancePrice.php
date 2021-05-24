@@ -17,7 +17,7 @@ class WatchBinancePrice extends Command
      *
      * @var string
      */
-    protected $signature = 'bbb:watch-binance-price {seconds=10}';
+    protected $signature = 'broker:watch-binance-price {seconds=10}';
 
     /**
      * The console command description.
