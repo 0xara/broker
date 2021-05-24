@@ -118,7 +118,7 @@ class WatchBinancePrice extends Command
         $alerts = $alerts->with('user')->get();
 
         // update alerts that triggered before
-        if(count($alerts)) $updateQuery .= " WHERE {$alertTable}.id NOT in (".$alerts->keys()->join(',').")";
+        if(count($alerts)) $updateQuery .= " WHERE {$alertTable}.id NOT in (".implode(',',$alerts->modelKeys()).")";
         \DB::statement($updateQuery);
 
         if(count($alerts)) {
@@ -129,7 +129,7 @@ class WatchBinancePrice extends Command
                 " THEN '".Alert::UP_POSITION."'".
                 " ELSE '".Alert::DOWN_POSITION."'".
                 "END) " .
-                "WHERE {$alertTable}.id in (".$alerts->keys()->join(',').")"
+                "WHERE {$alertTable}.id in (".implode(',',$alerts->modelKeys()).")"
             );
         }
 
