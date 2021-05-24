@@ -19,7 +19,9 @@ class UserAlertController extends Controller
      */
     public function index()
     {
-        return view('user.pages.alert.index');
+        return view('user.pages.alert.index')->with([
+            'alerts' => Alert::paginate()
+        ]);
     }
 
     /**

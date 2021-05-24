@@ -29,6 +29,6 @@
             @endforeach
         </table>
     </div>
-
+    {{ $alerts->links() }}
 </body>
 </html>
