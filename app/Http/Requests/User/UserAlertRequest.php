@@ -37,7 +37,8 @@ class UserAlertRequest extends FormRequest
             ],
             'price' => [
                 'required'
-            ]
+            ],
+            'active' => 'boolean'
         ];
     }
 }
