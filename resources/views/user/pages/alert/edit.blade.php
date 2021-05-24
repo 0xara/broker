@@ -56,6 +56,16 @@
                     <span class="text-gray-700">Price</span>
                     <input type="text" name="price" class="mt-1 block w-full form-input" value="{{old('price', $alert->price)}}">
                 </label>
+                <div class="block">
+                    <div class="mt-2">
+                        <div>
+                            <label class="inline-flex items-center">
+                                <input type="checkbox" {{old('active',$alert->active) ? 'checked' : ''}}>
+                                <span class="ml-2">Active</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
                 <div class="block text-right">
                     <button class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded" type="submit">Submit</button>
                 </div>
