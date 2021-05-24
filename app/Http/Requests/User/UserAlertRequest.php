@@ -42,7 +42,7 @@ class UserAlertRequest extends FormRequest
             'price' => [
                 'required'
             ],
-            'active' => 'boolean'
+            'active' => Rule::in([0,1])
         ];
     }
 }
