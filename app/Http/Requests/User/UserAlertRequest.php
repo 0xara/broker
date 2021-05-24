@@ -25,6 +25,10 @@ class UserAlertRequest extends FormRequest
      */
     public function rules()
     {
+        $this->merge([
+            'active' => $this->input('active') ? 1 : 0
+        ]);
+
         return [
             'broker_id' => [
                 'required',
