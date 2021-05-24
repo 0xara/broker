@@ -53,6 +53,6 @@ class Alert extends \Eloquent
      */
     public function broker()
     {
-        return $this->belongsTo(Broker::class, 'exchange_id');
+        return $this->belongsTo(Broker::class, 'broker_id');
     }
 }
