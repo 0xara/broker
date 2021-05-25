@@ -17,7 +17,7 @@ class WatchBinancePrice extends Command
      *
      * @var string
      */
-    protected $signature = 'broker:watch-binance-price {seconds=10}';
+    protected $signature = 'broker:watch-binance-price {seconds=2}';
 
     /**
      * The console command description.
@@ -77,6 +77,8 @@ class WatchBinancePrice extends Command
         \Log::info('schedule ping');
         $symbolObjects = Binance::getSymbolsPrices();
 
+        $existSymbolsInDB = Alert::groupBy('symbol')->pluck('symbol');
+
         /** @var Builder $alerts */
         $alerts = Alert::query();
         $updateQuery =
@@ -89,6 +91,8 @@ class WatchBinancePrice extends Command
 
         foreach ($symbolObjects as $KEY => $symbolObj)
         {
+            if(! $existSymbolsInDB->contains($symbolObj['symbol'])) continue;
+
             $alerts->orWhere(function ($q) use ($KEY, $symbolObj) {
                 /** @var Builder $q */
                 $q->where('symbol','=',$symbolObj['symbol']);
