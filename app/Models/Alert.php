@@ -22,11 +22,11 @@ class Alert extends \Eloquent
     const CROSS = 'CROSS';
 
     const OPERATOR_TITLES = [
-        self::GT => 'Greater Than',
-        self::LT => 'Lower Than',
+        //self::GT => 'Greater Than',
+        //self::LT => 'Lower Than',
         self::GTE => 'Greater Than Or Equal',
         self::LTE => 'Lower Than Or Equal',
-        self::CROSS => 'Cross',
+        //self::CROSS => 'Cross',
     ];
 
     const OPERATOR_FA_TITLES = [

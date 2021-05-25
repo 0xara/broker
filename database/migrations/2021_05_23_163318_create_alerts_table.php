@@ -17,7 +17,7 @@ class CreateAlertsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('broker_id');
-            $table->string('symbol');
+            $table->string('symbol')->index();
             $table->string('operator');
             $table->string('current_position');
             $table->decimal('price')->nullable();
