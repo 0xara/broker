@@ -25,10 +25,6 @@ class UserAlertRequest extends FormRequest
      */
     public function rules()
     {
-        $this->merge([
-            'active' => $this->input('active') == 1 ? 1 : 0
-        ]);
-
         return [
             'broker_id' => [
                 'required',
@@ -42,7 +38,6 @@ class UserAlertRequest extends FormRequest
             'price' => [
                 'required'
             ],
-            'active' => Rule::in([0,1])
         ];
     }
 }

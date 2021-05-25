@@ -55,7 +55,12 @@ class UserAlertController extends Controller
         if(!$price)
             throw ValidationException::withMessages(['']);
 
-        $alert = Alert::make($request->validated());
+        $alert = Alert::make(
+            array_merge(
+                $request->validated(),
+                ['active' => $request->input('active') == 1 ? 1 : 0]
+            )
+        );
 
         if(in_array($request->input('operator'),[Alert::GT,Alert::GTE, Alert::CROSS])) {
             $alert->current_position = $request->input('price') < $price ? Alert::DOWN_POSITION : Alert::UP_POSITION;
@@ -133,7 +138,7 @@ class UserAlertController extends Controller
             $alert->current_position = $request->input('price') > $price ? Alert::DOWN_POSITION : Alert::UP_POSITION;
         }
 
-        $alert->update($request->validated());
+        $alert->update(array_merge($request->validated(), ['active' => $request->input('active') == 1 ? 1 : 0] ));
 
         return \Redirect::action('User\UserAlertController@edit',[$alert->getKey()]);
     }
