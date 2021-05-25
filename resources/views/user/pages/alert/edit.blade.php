@@ -33,7 +33,7 @@
                         @foreach($symbols as $quote => $symbolArr)
                             <optgroup label="{{$quote}}">
                                 @foreach($symbolArr as $symbol)
-                                    @if(old('symbol') == $symbol)
+                                    @if(old('symbol', $alert->symbol) == $symbol)
                                         <option value="{{$symbol}}" selected>{{$symbol}}</option>
                                     @else
                                         <option value="{{$symbol}}">{{$symbol}}</option>
