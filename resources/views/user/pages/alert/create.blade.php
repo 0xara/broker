@@ -126,7 +126,7 @@
 
                     getPrice();
 
-                    this.intervalId = setInterval(getPrice,5000)
+                    this.intervalId = setInterval(getPrice,2000)
                 },
                 onOperatorChange(event) {
                     if(!event.target.value) {
