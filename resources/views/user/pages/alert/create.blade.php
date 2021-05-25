@@ -87,7 +87,7 @@
             el: '#app',
             data: {
                 symbol: '',
-                intervalId: '',
+                ws: '',
                 currentPrice: '',
                 lastPrice: '',
                 operator: ''
@@ -104,9 +104,9 @@
             methods: {
                 onSymbolChange(event) {
                     this.currentPrice = '';
-                    if(this.intervalId) {
-                        clearInterval(this.intervalId);
-                        this.intervalId = '';
+                    if(this.ws) {
+                        this.ws.close();
+                        this.ws = '';
                     }
                     if(!event.target.value) {
                         return;
@@ -115,18 +115,12 @@
                 },
 
                 setSymbolCurrentPrice(symbol) {
-                    let getPrice = () => {
-                        fetch(`https://api.binance.com/api/v3/ticker/price?symbol=${symbol}`)
-                            .then(response => response.json())
-                            .then((response) => {
-                                this.lastPrice = this.currentPrice;
-                                this.currentPrice = parseFloat(response['price']);
-                            });
-                    };
-
-                    getPrice();
-
-                    this.intervalId = setInterval(getPrice,2000)
+                    this.ws = new WebSocket(`wss://stream.binance.com:9443/ws/${symbol.toLowerCase()}@ticker`);
+                    ws.onmessage = (event) => {
+                        let data = JSON.parse(event.data);
+                        this.lastPrice = this.currentPrice;
+                        this.currentPrice = parseFloat(data['c']);
+                    }
                 },
                 onOperatorChange(event) {
                     if(!event.target.value) {
