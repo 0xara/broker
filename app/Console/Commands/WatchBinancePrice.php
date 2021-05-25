@@ -89,6 +89,8 @@ class WatchBinancePrice extends Command
             " ELSE '".Alert::DOWN_POSITION."'".
             " END) WHERE {$alertTable}.repeat = 1 AND (";
 
+        $is_first = true;
+
         foreach ($symbolObjects as $KEY => $symbolObj)
         {
             if(! $existSymbolsInDB->contains($symbolObj['symbol'])) continue;
@@ -107,7 +109,8 @@ class WatchBinancePrice extends Command
                 );
             });
 
-            $updateQuery .= $KEY != 0 ? ' OR ' : '';
+            $updateQuery .= $is_first ? ' OR ' : '';
+            $is_first = false;
 
             $updateQuery .= "(" .
                 "symbol='{$symbolObj['symbol']}' AND ".
