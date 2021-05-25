@@ -33,12 +33,12 @@ class UserAlertController extends Controller
     {
         $symbols = Binance::getSymbols();
 
-        if(!$symbols->contains($request->old('symbol'))) {
+/*        if(!$symbols->contains($request->old('symbol'))) {
             $request->flashOnly('symbol');
-        }
+        }*/
 
         return view('user.pages.alert.create')->with([
-            'symbols' => $symbols
+            'symbols' => $this->prepareSymbols($symbols)
         ]);
     }
 
@@ -105,13 +105,13 @@ class UserAlertController extends Controller
 
         $symbols = Binance::getSymbols();
 
-        if(!$symbols->contains($request->old('symbol'))) {
+/*        if(!$symbols->contains($request->old('symbol'))) {
             $request->flashOnly('symbol');
-        }
+        }*/
 
         return view('user.pages.alert.edit')->with([
             'alert' => $alert,
-            'symbols' => $symbols
+            'symbols' => $this->prepareSymbols($symbols)
         ]);
     }
 
@@ -159,5 +159,22 @@ class UserAlertController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * @param $symbols
+     * @return array
+     */
+    public function prepareSymbols($symbols)
+    {
+        $result = [];
+
+        foreach ($symbols as $symbol) {
+            if(!array_key_exists($symbol['quoteAsset'],$result)) {
+                $result[$symbol['quoteAsset']] = [];
+            }
+            $result[$symbol['quoteAsset']][] = $symbol['symbol'];
+        }
+        return $result;
     }
 }

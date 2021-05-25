@@ -29,12 +29,16 @@
                     <span v-if="currentPrice" class="font-bold" :class="{ 'text-green-700': lastPrice < currentPrice, 'text-red-700': lastPrice > currentPrice }" v-text="'('+currentPrice+')'"></span>
                     <select name="symbol" class="block w-full mt-1 form-select"  @change="onSymbolChange($event)" ref="symbolInput">
                         <option value="">select symbol</option>
-                        @foreach($symbols as $symbol)
-                            @if(old('symbol') == $symbol)
-                                <option value="{{$symbol}}" selected>{{$symbol}}</option>
-                            @else
-                                <option value="{{$symbol}}">{{$symbol}}</option>
-                            @endif
+                        @foreach($symbols as $quote => $symbolArr)
+                            <optgroup label="{{$quote}}">
+                                @foreach($symbolArr as $symbol)
+                                    @if(old('symbol') == $symbol)
+                                        <option value="{{$symbol}}" selected>{{$symbol}}</option>
+                                    @else
+                                        <option value="{{$symbol}}">{{$symbol}}</option>
+                                    @endif
+                                @endforeach
+                            </optgroup>
                         @endforeach
                     </select>
                 </label>

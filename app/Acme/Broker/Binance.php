@@ -17,7 +17,12 @@ class Binance
         $http = \Http::get('https://api.binance.com/api/v3/exchangeInfo');
         $response = $http->json();
 
-        return collect($response['symbols'])->map(function ($item, $key) {
+        return $response['symbols'];
+    }
+
+    public static function getSymbolNames()
+    {
+        return collect(self::getSymbols()['symbols'])->map(function ($item, $key) {
             return $item['symbol'];
         });
     }
