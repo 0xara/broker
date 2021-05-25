@@ -70,7 +70,7 @@
                     <div class="mt-2">
                         <div>
                             <label class="inline-flex items-center">
-                                <input type="checkbox" name="repeat" value="1" {{old('repeat') == 1 ? 'checked' : ''}}>
+                                <input type="checkbox" name="repeat" value="1" {{old('repeat',$alert->repeat) == 1 ? 'checked' : ''}}>
                                 <span class="ml-2">Repeat</span>
                             </label>
                         </div>
