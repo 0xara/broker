@@ -122,8 +122,9 @@
                     this.ws = new WebSocket(`wss://stream.binance.com:9443/ws/${symbol.toLowerCase()}@ticker`);
                     ws.onmessage = (event) => {
                         let data = JSON.parse(event.data);
-                        this.lastPrice = this.currentPrice;
-                        this.currentPrice = parseFloat(data['c']);
+                        let newPrice = parseFloat(data['c']);
+                        this.lastPrice = newPrice != this.currentPrice ? this.currentPrice : this.lastPrice;
+                        this.currentPrice = newPrice;
                     }
                 },
                 onOperatorChange(event) {
