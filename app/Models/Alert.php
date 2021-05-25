@@ -13,6 +13,7 @@ class Alert extends \Eloquent
         'current_position',
         'price',
         'active',
+        'repeat',
     ];
 
     const GT = 'GT';
