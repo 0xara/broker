@@ -85,7 +85,7 @@ class WatchBinancePrice extends Command
             "CASE WHEN current_position='".Alert::DOWN_POSITION."'".
             " THEN '".Alert::UP_POSITION."'".
             " ELSE '".Alert::DOWN_POSITION."'".
-            " END) WHERE repeat = 1 AND (";
+            " END) WHERE {$alertTable}.repeat = 1 AND (";
 
         foreach ($symbolObjects as $KEY => $symbolObj)
         {
