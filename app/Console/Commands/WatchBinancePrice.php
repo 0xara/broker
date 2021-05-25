@@ -85,7 +85,7 @@ class WatchBinancePrice extends Command
             "CASE WHEN current_position='".Alert::DOWN_POSITION."'".
             " THEN '".Alert::UP_POSITION."'".
             " ELSE '".Alert::DOWN_POSITION."'".
-            " END) WHERE ";
+            " END) WHERE repeat = 1 AND (";
 
         foreach ($symbolObjects as $KEY => $symbolObj)
         {
@@ -119,7 +119,7 @@ class WatchBinancePrice extends Command
         $alerts = $alerts->with('user')->get();
 
         // update alerts that triggered before
-        if(count($alerts)) $updateQuery .= " AND {$alertTable}.id NOT in (".implode(',',$alerts->modelKeys()).")";
+        if(count($alerts)) $updateQuery .= ") AND {$alertTable}.id NOT in (".implode(',',$alerts->modelKeys()).")";
         \DB::statement($updateQuery);
 
         if(count($alerts)) {

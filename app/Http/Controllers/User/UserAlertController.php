@@ -58,7 +58,10 @@ class UserAlertController extends Controller
         $alert = Alert::make(
             array_merge(
                 $request->validated(),
-                ['active' => $request->input('active') == 1 ? 1 : 0]
+                [
+                    'active' => $request->input('active') == 1 ? 1 : 0,
+                    'repeat' => $request->input('repeat') == 1 ? 1 : 0,
+                ]
             )
         );
 
@@ -138,7 +141,11 @@ class UserAlertController extends Controller
             $alert->current_position = $request->input('price') > $price ? Alert::DOWN_POSITION : Alert::UP_POSITION;
         }
 
-        $alert->update(array_merge($request->validated(), ['active' => $request->input('active') == 1 ? 1 : 0] ));
+        $alert->update(array_merge($request->validated(), [
+                'active' => $request->input('active') == 1 ? 1 : 0,
+                'repeat' => $request->input('repeat') == 1 ? 1 : 0,
+            ]
+        ));
 
         return \Redirect::action('User\UserAlertController@edit',[$alert->getKey()]);
     }

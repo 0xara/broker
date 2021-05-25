@@ -16,6 +16,8 @@
                 <th class="border">operator</th>
                 <th class="border">price</th>
                 <th class="border">active</th>
+                <th class="border">repeat</th>
+                <th class="border">#</th>
             </tr>
             </thead>
             @foreach($alerts as $alert)
@@ -25,6 +27,10 @@
                 <td class="border">{{$alert->operator}}</td>
                 <td class="border">{{$alert->price}}</td>
                 <td class="border">{{$alert->active}}</td>
+                <td class="border">{{$alert->repeat}}</td>
+                <td class="border">
+                    <a href="{{action('User\UserAlertController@edit',[$alert->getKey()])}}">Edit</a>
+                </td>
             </tr>
             @endforeach
         </table>
