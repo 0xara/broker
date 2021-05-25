@@ -78,7 +78,7 @@ class WatchBinancePrice extends Command
         $symbolObjects = Binance::getSymbolsPrices();
 
         /** @var Builder $alerts */
-        $alerts = Alert::query()->where('active','=',1);
+        $alerts = Alert::query();
         $updateQuery =
             "UPDATE ".($alertTable = Alert::newModelInstance()->getTable()).
             " SET current_position= (" .
@@ -92,6 +92,7 @@ class WatchBinancePrice extends Command
             $alerts->orWhere(function ($q) use ($KEY, $symbolObj) {
                 /** @var Builder $q */
                 $q->where('symbol','=',$symbolObj['symbol']);
+                $q->where('active','=',1);
                 $q->whereRaw(
                     "CASE " .
                     " WHEN Operator='".Alert::GTE."' AND current_position='".Alert::DOWN_POSITION."' THEN price"." <= ".$symbolObj['price'].
