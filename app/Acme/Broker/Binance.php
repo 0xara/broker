@@ -38,4 +38,9 @@ class Binance
         return $response['price'] ?? null;
     }
 
+    public static function getSymbolsPricesDummy()
+    {
+        return [["symbol" => "ETHBTC","price" => "0.06849800" ], [ "symbol" => "LTCBTC","price" => "0.00474300" ] ];
+    }
+
 }
