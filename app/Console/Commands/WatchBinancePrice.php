@@ -109,7 +109,7 @@ class WatchBinancePrice extends Command
                 );
             });
 
-            $updateQuery .= $is_first ? ' OR ' : '';
+            $updateQuery .= !$is_first ? ' OR ' : '';
             $is_first = false;
 
             $updateQuery .= "(" .
