@@ -120,7 +120,7 @@
 
                 setSymbolCurrentPrice(symbol) {
                     this.ws = new WebSocket(`wss://stream.binance.com:9443/ws/${symbol.toLowerCase()}@ticker`);
-                    ws.onmessage = (event) => {
+                    this.ws.onmessage = (event) => {
                         let data = JSON.parse(event.data);
                         let newPrice = parseFloat(data['c']);
                         this.lastPrice = newPrice != this.currentPrice ? this.currentPrice : this.lastPrice;
