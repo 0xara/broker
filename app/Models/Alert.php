@@ -14,6 +14,7 @@ class Alert extends \Eloquent
         'price',
         'active',
         'repeat',
+        'details',
     ];
 
     const GT = 'GT';
