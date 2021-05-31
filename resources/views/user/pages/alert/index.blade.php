@@ -18,32 +18,32 @@
         <table class="border-collapse border w-full">
             <thead>
             <tr>
-                <th class="border text-white bg-gray-700 p-3 text-center">
+                <th class="border text-gray-300 bg-gray-700 p-3 text-center">
                     <a href="{{action('User\UserAlertController@index',['sortBy' => 'broker'])}}">broker</a>
                 </th>
-                <th class="border text-white bg-gray-700 p-3 text-center">
+                <th class="border text-gray-300 bg-gray-700 p-3 text-center">
                     <a href="{{action('User\UserAlertController@index',['sortBy' => 'symbol'])}}">symbol</a>
                 </th>
-                <th class="border text-white bg-gray-700 p-3 text-center w-1">operator</th>
-                <th class="border text-white bg-gray-700 p-3 text-center">price</th>
-                <th class="border text-white bg-gray-700 p-3 text-center">
+                <th class="border text-gray-300 bg-gray-700 p-3 text-center w-1">operator</th>
+                <th class="border text-gray-300 bg-gray-700 p-3 text-center">price</th>
+                <th class="border text-gray-300 bg-gray-700 p-3 text-center">
                     <a href="{{action('User\UserAlertController@index',['sortBy' => 'active'])}}">active</a>
                 </th>
-                <th class="border text-white bg-gray-700 p-3 text-center w-1">repeat</th>
-                <th class="border text-white bg-gray-700 p-3 text-center w-1">details</th>
-                <th class="border text-white bg-gray-700 p-3 text-center w-1">
+                <th class="border text-gray-300 bg-gray-700 p-3 text-center w-1">repeat</th>
+                <th class="border text-gray-300 bg-gray-700 p-3 text-center w-1">details</th>
+                <th class="border text-gray-300 bg-gray-700 p-3 text-center w-1">
                     <a href="{{action('User\UserAlertController@index',['sortBy' => 'create'])}}">created at</a>
                 </th>
-                <th class="border text-white bg-gray-700 p-3 text-center w-1">
+                <th class="border text-gray-300 bg-gray-700 p-3 text-center w-1">
                     <a href="{{action('User\UserAlertController@index',['sortBy' => 'update'])}}">updated at</a>
                 </th>
-                <th class="border text-white bg-gray-700 p-3 text-center">#</th>
+                <th class="border text-gray-300 bg-gray-700 p-3 text-center">#</th>
             </tr>
             </thead>
             @foreach($alerts as $alert)
                 <tr>
-                    <td class="border p-3 text-center">{{$alert->broker->name}}</td>
-                    <td class="border p-3 text-center font-bold">
+                    <td class="border text-gray-400 p-3 text-center">{{$alert->broker->name}}</td>
+                    <td class="border text-gray-400 p-3 text-center font-bold">
                         {{$alert->symbol}}
                         <span v-if="priceData['{{$alert->symbol}}']" :class="[priceData['{{$alert->symbol}}'].color || 'text-black']">
                             <span v-if="priceData">(</span>
@@ -51,14 +51,14 @@
                             <span v-if="priceData">)</span>
                         </span>
                     </td>
-                    <td class="border p-3 text-center w-1">{{$alert->operator}}</td>
-                    <td class="border p-3 text-center">{{(float) $alert->price}}</td>
-                    <td class="border p-3 text-center w-1">{{$alert->active}}</td>
-                    <td class="border p-3 text-center w-1">{{$alert->repeat}}</td>
-                    <td class="border p-3 text-center">{{$alert->details}}</td>
-                    <td class="border p-3 text-center w-1">{{\App\Acme\CarbonFa\CarbonFa::setCarbon($alert->created_at)->toJalali(true,'Y/m/d H:i')}}</td>
-                    <td class="border p-3 text-center w-1">{{\App\Acme\CarbonFa\CarbonFa::setCarbon($alert->updated_at)->toJalali(true,'Y/m/d H:i')}}</td>
-                    <td class="border p-3 text-center">
+                    <td class="border text-gray-400 p-3 text-center w-1">{{$alert->operator}}</td>
+                    <td class="border text-gray-400 p-3 text-center">{{(float) $alert->price}}</td>
+                    <td class="border text-gray-400 p-3 text-center w-1">{{$alert->active}}</td>
+                    <td class="border text-gray-400 p-3 text-center w-1">{{$alert->repeat}}</td>
+                    <td class="border text-gray-400 p-3 text-center">{{$alert->details}}</td>
+                    <td class="border text-gray-400 p-3 text-center w-1">{{\App\Acme\CarbonFa\CarbonFa::setCarbon($alert->created_at)->toJalali(true,'Y/m/d H:i')}}</td>
+                    <td class="border text-gray-400 p-3 text-center w-1">{{\App\Acme\CarbonFa\CarbonFa::setCarbon($alert->updated_at)->toJalali(true,'Y/m/d H:i')}}</td>
+                    <td class="border text-gray-400 p-3 text-center">
                         <a class="font-bold text-pink-500" href="{{action('User\UserAlertController@edit',[$alert->getKey()])}}">Edit</a>
                         <span class="mr-3 ml-3">|</span>
                         <form class="inline-block" action="{{action('User\UserAlertController@destroy', [$alert->getKey()])}}" method="post">
