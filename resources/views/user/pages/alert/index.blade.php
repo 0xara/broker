@@ -43,7 +43,7 @@
             @foreach($alerts as $alert)
                 <tr>
                     <td class="border text-gray-400 bg-gray-800 p-3 text-center">{{$alert->broker->name}}</td>
-                    <td class="border text-gray-400 bg-gray-800 p-3 text-left p-12 font-bold">
+                    <td class="border text-gray-400 bg-gray-800 p-3 text-left pl-12 font-bold">
                         {{$alert->symbol}}
                         <span v-if="priceData['{{$alert->symbol}}']" :class="[priceData['{{$alert->symbol}}'].color || 'text-black']">
                             <span v-if="priceData">(</span>
