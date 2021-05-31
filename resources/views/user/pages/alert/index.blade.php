@@ -18,32 +18,32 @@
         <table class="border-collapse border w-full">
             <thead>
             <tr>
-                <th class="border p-3 text-center">
+                <th class="border text-white bg-gray-700 p-3 text-center">
                     <a href="{{action('User\UserAlertController@index',['sortBy' => 'broker'])}}">broker</a>
                 </th>
-                <th class="border p-3 text-center">
+                <th class="border text-white bg-gray-700 p-3 text-center">
                     <a href="{{action('User\UserAlertController@index',['sortBy' => 'symbol'])}}">symbol</a>
                 </th>
-                <th class="border p-3 text-center w-1">operator</th>
-                <th class="border p-3 text-center">price</th>
-                <th class="border p-3 text-center">
+                <th class="border text-white bg-gray-700 p-3 text-center w-1">operator</th>
+                <th class="border text-white bg-gray-700 p-3 text-center">price</th>
+                <th class="border text-white bg-gray-700 p-3 text-center">
                     <a href="{{action('User\UserAlertController@index',['sortBy' => 'active'])}}">active</a>
                 </th>
-                <th class="border p-3 text-center w-1">repeat</th>
-                <th class="border p-3 text-center w-1">details</th>
-                <th class="border p-3 text-center w-1">
+                <th class="border text-white bg-gray-700 p-3 text-center w-1">repeat</th>
+                <th class="border text-white bg-gray-700 p-3 text-center w-1">details</th>
+                <th class="border text-white bg-gray-700 p-3 text-center w-1">
                     <a href="{{action('User\UserAlertController@index',['sortBy' => 'create'])}}">created at</a>
                 </th>
-                <th class="border p-3 text-center w-1">
+                <th class="border text-white bg-gray-700 p-3 text-center w-1">
                     <a href="{{action('User\UserAlertController@index',['sortBy' => 'update'])}}">updated at</a>
                 </th>
-                <th class="border p-3 text-center">#</th>
+                <th class="border text-white bg-gray-700 p-3 text-center">#</th>
             </tr>
             </thead>
             @foreach($alerts as $alert)
                 <tr>
                     <td class="border p-3 text-center">{{$alert->broker->name}}</td>
-                    <td class="border p-3 text-center">
+                    <td class="border p-3 text-center font-bold">
                         {{$alert->symbol}}
                         <span v-if="priceData['{{$alert->symbol}}']" :class="[priceData['{{$alert->symbol}}'].color || 'text-black']">
                             <span v-if="priceData">(</span>
