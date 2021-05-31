@@ -7,7 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/@tailwindcss/custom-forms@0.2.1/dist/custom-forms.min.css" rel="stylesheet">
 </head>
 <body>
-<div class="flex flex-row">
+<div id="#app" class="flex flex-row">
     <div class="bg-gray flex-1 p-10 font-bold text-pink-500" style="max-width: 300px;">
         <ul>
             <li class="pb-5"><a href="{{action('User\UserAlertController@index')}}">List Of Alerts</a></li>
@@ -43,13 +43,20 @@
             @foreach($alerts as $alert)
                 <tr>
                     <td class="border p-3 text-center">{{$alert->broker->name}}</td>
-                    <td class="border p-3 text-center">{{$alert->symbol}}</td>
+                    <td class="border p-3 text-center">
+                        {{$alert->symbol}}
+                        <span v-if="priceData['{{$alert->symbol}}']" :class="[priceData['{{$alert->symbol}}'].color || 'bg-black']">
+                            <span v-if="priceData.length">(</span>
+                            <span v-if="priceData.length" v-text="priceData['{{$alert->symbol}}'].c || ''"></span>
+                            <span v-if="priceData.length">)</span>
+                        </span>
+                    </td>
                     <td class="border p-3 text-center w-1">{{$alert->operator}}</td>
                     <td class="border p-3 text-center">{{(float) $alert->price}}</td>
                     <td class="border p-3 text-center w-1">{{$alert->active}}</td>
                     <td class="border p-3 text-center w-1">{{$alert->repeat}}</td>
                     <td class="border p-3 text-center">{{$alert->details}}</td>
-                    <td class="border p-3 text-center w-1">{{\App\Acme\CarbonFa\CarbonFa::setCarbon($alert->created_at)->toJalali(true)}}</td>
+                    <td class="border p-3 text-center w-1">{{\App\Acme\CarbonFa\CarbonFa::setCarbon($alert->created_at)->toJalali(true,'Y/m/d H:i')}}</td>
                     <td class="border p-3 text-center w-1">{{\App\Acme\CarbonFa\CarbonFa::setCarbon($alert->updated_at)->toJalali(true,'Y/m/d H:i')}}</td>
                     <td class="border p-3 text-center">
                         <a class="font-bold text-pink-500" href="{{action('User\UserAlertController@edit',[$alert->getKey()])}}">Edit</a>
@@ -66,5 +73,45 @@
     </div>
     {{ $alerts->links() }}
 </div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+<script>
+
+    new Vue({
+        el: '#app',
+
+        data: {
+            priceData: {},
+            ws: ''
+        },
+
+        mounted() {
+            this.$nextTick(() => {
+                this.getPrices();
+            })
+        },
+
+        methods: {
+            getPrices() {
+                this.ws = new WebSocket(`wss://stream.binance.com:9443/ws/!miniTicker@arr`);
+                this.ws.onmessage = (event) => {
+                    let data = JSON.parse(event.data);
+                    data.forEach((item) => {
+                        let oldItem = this.priceData[item.s];
+                        if(oldItem) {
+                            item.color = oldItem.color;
+                            if(oldItem.c > item.c) {
+                                item.color = 'bg-green-700';
+                            }
+                            if(oldItem.c < item.c) {
+                                item.color = 'bg-red-700';
+                            }
+                        }
+                        this.priceData[item.s] = item;
+                    })
+                }
+            }
+        }
+    });
+</script>
 </body>
 </html>
