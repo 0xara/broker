@@ -15,6 +15,11 @@ class Alert extends \Eloquent
         'active',
         'repeat',
         'details',
+        'charts',
+    ];
+
+    protected $casts = [
+        'charts' => 'array'
     ];
 
     const GT = 'GT';

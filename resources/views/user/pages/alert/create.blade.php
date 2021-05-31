@@ -69,6 +69,16 @@
                     <span class="text-gray-700">Additional details</span>
                     <textarea name="details" class="mt-1 block w-full form-textarea" rows="2"></textarea>
                 </label>
+                <label class="block mb-5">
+                    <span class="text-gray-700">Charts</span>
+                    <span class="block flex mt-1">
+                        <span class="block flex-1">
+                            <input type="text" class="block w-full form-input" v-model="chartTemp">
+                        </span>
+                        <button class="block bg-indigo-500 text-white w-20" @click="handleAddChart()" :disabled="!chartTemp">Add</button>
+                        <input v-if="charts.length > 0" type="hidden" v-for="(chart, index) in charts" :name="'charts['+index+']'" :value="chart">
+                    </span>
+                </label>
                 <div class="block">
                     <div class="mt-2">
                         <div>
@@ -94,6 +104,15 @@
                 </div>
             </form>
         </div>
+        <div class="flex-1 px-10 mt-10">
+            <img v-if="charts.length > 0" :src="charts[carouselIndex ? carouselIndex : 0]" alt="">
+            <div class="flex justify-between mt-5">
+                <div class="flex-1"></div>
+                <div><a class="bg-indigo-500 text-white px-5 py-2" @click="decreaseCarouselIndex()"> << </a></div>
+                <div><a class="bg-indigo-500 text-white px-5 py-2 mr-2" @click="increaseCarouselIndex()"> >> </a></div>
+                <div class="flex-1"></div>
+            </div>
+        </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
     <script>
@@ -104,7 +123,10 @@
                 ws: '',
                 currentPrice: '',
                 lastPrice: '',
-                operator: ''
+                operator: '',
+                charts: [],
+                chartTemp: '',
+                carouselIndex: ''
             },
 
             mounted() {
@@ -142,6 +164,24 @@
                         this.operator = '';
                     }
                     this.operator = event.target.value;
+                },
+
+                handleAddChart() {
+                    if(!this.chartTemp) return;
+                    this.charts.push(this.chartTemp);
+                    this.chartTemp = '';
+                },
+
+                increaseCarouselIndex() {
+                    if(!this.charts.length) return;
+                    if(this.charts.length == this.carouselIndex + 1) return;
+                    this.carouselIndex = this.carouselIndex + 1;
+                },
+
+                decreaseCarouselIndex() {
+                    if(!this.charts.length) return;
+                    if(this.carouselIndex - 1 < 0) return;
+                    this.carouselIndex = this.carouselIndex - 1;
                 }
             }
         });

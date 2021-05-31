@@ -24,6 +24,7 @@ class CreateAlertsTable extends Migration
             $table->boolean('active')->default(1);
             $table->boolean('repeat')->default(1);
             $table->text('details');
+            $table->text('charts');
             $table->timestamps();
         });
     }

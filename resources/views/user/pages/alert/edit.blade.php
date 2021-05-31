@@ -76,7 +76,7 @@
                         <span class="block flex-1">
                             <input type="text" class="block w-full form-input" v-model="chartTemp">
                         </span>
-                        <button class="block flex-1 bg-indigo-500 text-white" @click="handleAddChart()" :disabled="!chartTemp">Add</button>
+                        <button class="block bg-indigo-500 text-white w-20" @click="handleAddChart()" :disabled="!chartTemp">Add</button>
                         <input v-if="charts.length > 0" type="hidden" v-for="(chart, index) in charts" :name="'charts['+index+']'" :value="chart">
                     </span>
                 </label>
@@ -109,8 +109,8 @@
             <img v-if="charts.length > 0" :src="charts[carouselIndex ? carouselIndex : 0]" alt="">
             <div class="flex justify-between mt-5">
                 <div class="flex-1"></div>
-                <div><a class="bg-indigo-500 text-white px-5 py-2 mr-2" @click="increaseCarouselIndex()">next</a></div>
-                <div><a class="bg-indigo-500 text-white px-5 py-2" @click="decreaseCarouselIndex()">previous</a></div>
+                <div><a class="bg-indigo-500 text-white px-5 py-2" @click="decreaseCarouselIndex()"> << </a></div>
+                <div><a class="bg-indigo-500 text-white px-5 py-2 mr-2" @click="increaseCarouselIndex()"> >> </a></div>
                 <div class="flex-1"></div>
             </div>
         </div>
@@ -135,6 +135,7 @@
                     if(this.$refs.symbolInput.value) {
                         this.setSymbolCurrentPrice(this.$refs.symbolInput.value);
                     }
+                    this.charts = JSON.parse('@json(is_array($alert->charts) ? $alert->charts : [] )');
                 })
             },
 
