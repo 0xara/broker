@@ -23,6 +23,7 @@ class CreateAlertsTable extends Migration
             $table->decimal('price',20,13)->nullable();
             $table->boolean('active')->default(1);
             $table->boolean('repeat')->default(1);
+            $table->text('details');
             $table->timestamps();
         });
     }

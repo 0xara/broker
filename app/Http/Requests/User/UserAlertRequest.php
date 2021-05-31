@@ -38,6 +38,7 @@ class UserAlertRequest extends FormRequest
             'price' => [
                 'required'
             ],
+            'details' => []
         ];
     }
 }

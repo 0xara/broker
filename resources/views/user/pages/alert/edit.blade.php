@@ -66,6 +66,10 @@
                     <span class="text-gray-700">Price</span>
                     <input type="text" name="price" class="mt-1 block w-full form-input" value="{{(float) old('price', $alert->price)}}">
                 </label>
+                <label class="block">
+                    <span class="text-gray-700">Additional details</span>
+                    <textarea name="details" class="mt-1 block w-full form-textarea" rows="2">{{old('details', $alert->details)}}</textarea>
+                </label>
                 <div class="block">
                     <div class="mt-2">
                         <div>
