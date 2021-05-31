@@ -7,7 +7,14 @@
     <link href="https://cdn.jsdelivr.net/npm/@tailwindcss/custom-forms@0.2.1/dist/custom-forms.min.css" rel="stylesheet">
 </head>
 <body>
-    <div class="container m-auto mt-10" style="max-width: 600px;">
+<div class="flex flex-row">
+    <div class="bg-gray flex-1 p-10" style="max-width: 300px;">
+        <ul>
+            <li class="pb-5"><a href="{{action('User\UserAlertController@index')}}">List Of Alerts</a></li>
+            <li class=""><a href="{{action('User\UserAlertController@create')}}">Create An Alert</a></li>
+        </ul>
+    </div>
+    <div class="mt-10 flex-1" style="max-width: 600px;">
         <table class="border-collapse border w-full">
             <thead>
             <tr>
@@ -21,20 +28,21 @@
             </tr>
             </thead>
             @foreach($alerts as $alert)
-            <tr>
-                <td class="border">{{$alert->broker->name}}</td>
-                <td class="border">{{$alert->symbol}}</td>
-                <td class="border">{{$alert->operator}}</td>
-                <td class="border">{{$alert->price}}</td>
-                <td class="border">{{$alert->active}}</td>
-                <td class="border">{{$alert->repeat}}</td>
-                <td class="border">
-                    <a href="{{action('User\UserAlertController@edit',[$alert->getKey()])}}">Edit</a>
-                </td>
-            </tr>
+                <tr>
+                    <td class="border">{{$alert->broker->name}}</td>
+                    <td class="border">{{$alert->symbol}}</td>
+                    <td class="border">{{$alert->operator}}</td>
+                    <td class="border">{{$alert->price}}</td>
+                    <td class="border">{{$alert->active}}</td>
+                    <td class="border">{{$alert->repeat}}</td>
+                    <td class="border">
+                        <a href="{{action('User\UserAlertController@edit',[$alert->getKey()])}}">Edit</a>
+                    </td>
+                </tr>
             @endforeach
         </table>
     </div>
     {{ $alerts->links() }}
+</div>
 </body>
 </html>
