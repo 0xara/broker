@@ -66,9 +66,18 @@
                     <span class="text-gray-700">Price</span>
                     <input type="text" name="price" class="mt-1 block w-full form-input" value="{{(float) old('price', $alert->price)}}">
                 </label>
-                <label class="block">
+                <label class="block mb-5">
                     <span class="text-gray-700">Additional details</span>
                     <textarea name="details" class="mt-1 block w-full form-textarea" rows="2">{{old('details', $alert->details)}}</textarea>
+                </label>
+                <label class="block mb-5">
+                    <span class="text-gray-700">Charts</span>
+                    <span class="block flex mt-1">
+                        <span class="block flex-1">
+                            <input type="text" class="block w-full form-input" v-model="chartTemp">
+                        </span>
+                        <button class="block flex-1 bg-indigo-500 text-white" @click="handleAddChart()" :disabled="!chartTemp">Add</button>
+                    </span>
                 </label>
                 <div class="block">
                     <div class="mt-2">
@@ -95,6 +104,13 @@
                 </div>
             </form>
         </div>
+        <div class="flex-1">
+            <img v-if="charts.length > 0" :src="charts[carouselIndex ? carouselIndex : 0]" alt="">
+            <div>
+                <div><a href="">next</a></div>
+                <div><a href="">previous</a></div>
+            </div>
+        </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
     <script>
@@ -105,7 +121,10 @@
                 ws: '',
                 currentPrice: '',
                 lastPrice: '',
-                operator: ''
+                operator: '',
+                charts: [],
+                chartTemp: '',
+                carouselIndex: ''
             },
 
             mounted() {
@@ -143,6 +162,12 @@
                         this.operator = '';
                     }
                     this.operator = event.target.value;
+                },
+
+                handleAddChart() {
+                    if(!this.chartTemp) return;
+                    this.charts.push(this.chartTemp);
+                    this.chartTemp = '';
                 }
             }
         });
