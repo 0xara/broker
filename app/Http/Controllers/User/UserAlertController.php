@@ -71,6 +71,7 @@ class UserAlertController extends Controller
                 [
                     'active' => $request->input('active') == 1 ? 1 : 0,
                     'repeat' => $request->input('repeat') == 1 ? 1 : 0,
+                    'charts' => $request->input('charts') ?: [],
                 ]
             )
         );
@@ -154,6 +155,7 @@ class UserAlertController extends Controller
         $alert->update(array_merge($request->validated(), [
                 'active' => $request->input('active') == 1 ? 1 : 0,
                 'repeat' => $request->input('repeat') == 1 ? 1 : 0,
+                'charts' => $request->input('charts') ?: [],
             ]
         ));
 
