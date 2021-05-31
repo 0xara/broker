@@ -24,17 +24,17 @@
                 <th class="border p-3 text-center">
                     <a href="{{action('User\UserAlertController@index',['sortBy' => 'symbol'])}}">symbol</a>
                 </th>
-                <th class="border p-3 text-center">operator</th>
+                <th class="border p-3 text-center w-1">operator</th>
                 <th class="border p-3 text-center">price</th>
                 <th class="border p-3 text-center">
                     <a href="{{action('User\UserAlertController@index',['sortBy' => 'active'])}}">active</a>
                 </th>
-                <th class="border p-3 text-center">repeat</th>
-                <th class="border p-3 text-center">details</th>
-                <th>
+                <th class="border p-3 text-center w-1">repeat</th>
+                <th class="border p-3 text-center w-1">details</th>
+                <th class="border p-3 text-center w-1">
                     <a href="{{action('User\UserAlertController@index',['sortBy' => 'create'])}}">created at</a>
                 </th>
-                <th>
+                <th class="border p-3 text-center w-1">
                     <a href="{{action('User\UserAlertController@index',['sortBy' => 'update'])}}">updated at</a>
                 </th>
                 <th class="border p-3 text-center">#</th>
@@ -44,13 +44,13 @@
                 <tr>
                     <td class="border p-3 text-center">{{$alert->broker->name}}</td>
                     <td class="border p-3 text-center">{{$alert->symbol}}</td>
-                    <td class="border p-3 text-center">{{$alert->operator}}</td>
+                    <td class="border p-3 text-center w-1">{{$alert->operator}}</td>
                     <td class="border p-3 text-center">{{(float) $alert->price}}</td>
-                    <td class="border p-3 text-center">{{$alert->active}}</td>
-                    <td class="border p-3 text-center">{{$alert->repeat}}</td>
+                    <td class="border p-3 text-center w-1">{{$alert->active}}</td>
+                    <td class="border p-3 text-center w-1">{{$alert->repeat}}</td>
                     <td class="border p-3 text-center">{{$alert->details}}</td>
-                    <td class="border p-3 text-center">{{\App\Acme\CarbonFa\CarbonFa::setCarbon($alert->created_at)->toJalali(true)}}</td>
-                    <td class="border p-3 text-center">{{\App\Acme\CarbonFa\CarbonFa::setCarbon($alert->updated_at)->toJalali(true)}}</td>
+                    <td class="border p-3 text-center w-1">{{\App\Acme\CarbonFa\CarbonFa::setCarbon($alert->created_at)->toJalali(true)}}</td>
+                    <td class="border p-3 text-center w-1">{{\App\Acme\CarbonFa\CarbonFa::setCarbon($alert->updated_at)->toJalali(true,'Y/m/d H:i')}}</td>
                     <td class="border p-3 text-center">
                         <a class="font-bold text-pink-500" href="{{action('User\UserAlertController@edit',[$alert->getKey()])}}">Edit</a>
                         <span class="mr-3 ml-3">|</span>
