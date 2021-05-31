@@ -154,11 +154,17 @@ class UserAlertController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($id)
     {
-        //
+        /** @var User $user */
+        $user = auth()->user();
+        $alert = $user->alerts()->findOrFail($id);
+
+        $alert->delete();
+
+        return back();
     }
 
     /**

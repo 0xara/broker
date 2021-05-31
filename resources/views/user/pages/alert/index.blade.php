@@ -37,6 +37,12 @@
                     <td class="border p-3 text-center">{{$alert->repeat}}</td>
                     <td class="border p-3 text-center">
                         <a class="font-bold text-pink-500" href="{{action('User\UserAlertController@edit',[$alert->getKey()])}}">Edit</a>
+                        <span class="mr-3 ml-3">|</span>
+                        <form class="inline-block" action="{{action('User\UserAlertController@destroy', [$alert->getKey()])}}" method="post">
+                            @method('DELETE')
+                            @csrf
+                            <button  class="font-bold text-pink-500" type="submit">Delete</button>
+                        </form>
                     </td>
                 </tr>
             @endforeach
