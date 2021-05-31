@@ -77,6 +77,7 @@
                             <input type="text" class="block w-full form-input" v-model="chartTemp">
                         </span>
                         <button class="block flex-1 bg-indigo-500 text-white" @click="handleAddChart()" :disabled="!chartTemp">Add</button>
+                        <input v-if="charts.length > 0" type="hidden" v-for="(chart, index) in charts" :name="'charts['+index+']'" :value="chart">
                     </span>
                 </label>
                 <div class="block">
@@ -104,11 +105,13 @@
                 </div>
             </form>
         </div>
-        <div class="flex-1">
+        <div class="flex-1 px-10 mt-10">
             <img v-if="charts.length > 0" :src="charts[carouselIndex ? carouselIndex : 0]" alt="">
-            <div>
-                <div><a href="">next</a></div>
-                <div><a href="">previous</a></div>
+            <div class="flex justify-between mt-5">
+                <div class="flex-1"></div>
+                <div><a class="bg-indigo-500 text-white px-5 py-2 mr-2" @click="increaseCarouselIndex()">next</a></div>
+                <div><a class="bg-indigo-500 text-white px-5 py-2" @click="decreaseCarouselIndex()">previous</a></div>
+                <div class="flex-1"></div>
             </div>
         </div>
     </div>
@@ -168,6 +171,18 @@
                     if(!this.chartTemp) return;
                     this.charts.push(this.chartTemp);
                     this.chartTemp = '';
+                },
+
+                increaseCarouselIndex() {
+                    if(!this.charts.length) return;
+                    if(this.charts.length == this.carouselIndex + 1) return;
+                    this.carouselIndex = this.carouselIndex + 1;
+                },
+
+                decreaseCarouselIndex() {
+                    if(!this.charts.length) return;
+                    if(this.carouselIndex - 1 < 0) return;
+                    this.carouselIndex = this.carouselIndex - 1;
                 }
             }
         });
