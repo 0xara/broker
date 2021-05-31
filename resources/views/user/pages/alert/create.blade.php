@@ -67,7 +67,7 @@
                 </label>
                 <label class="block">
                     <span class="text-gray-700">Additional details</span>
-                    <textarea name="details" class="mt-1 block w-full form-textarea" rows="2">{{old('details', $alert->details)}}</textarea>
+                    <textarea name="details" class="mt-1 block w-full form-textarea" rows="2"></textarea>
                 </label>
                 <div class="block">
                     <div class="mt-2">
