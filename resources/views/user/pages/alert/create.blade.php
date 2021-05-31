@@ -105,11 +105,13 @@
             </form>
         </div>
         <div class="flex-1 px-10 mt-10">
-            <img v-if="charts.length > 0" :src="charts[carouselIndex ? carouselIndex : 0]" alt="">
-            <div class="flex justify-between mt-5">
+            <a :href="charts[carouselIndex ? carouselIndex : 0]" v-if="charts.length > 0">
+                <img :src="charts[carouselIndex ? carouselIndex : 0]" alt="">
+            </a>
+            <div class="flex justify-between mt-5" v-if="charts.length > 0">
                 <div class="flex-1"></div>
-                <div><a class="text-white px-5 py-2 cursor-pointer mr-2" @click="decreaseCarouselIndex()" :class="[ charts.length && charts.length != carouselIndex + 1 ? 'bg-indigo-500' : 'bg-indigo-100']"> << </a></div>
-                <div><a class="text-white px-5 py-2cursor-pointer" @click="increaseCarouselIndex()" :class="[ charts.length && carouselIndex - 1 < 0 ? 'bg-indigo-500' : 'bg-indigo-100']"> >> </a></div>
+                <div><a class="text-white px-5 py-2" @click="decreaseCarouselIndex()" :class="[ charts.length && charts.length != carouselIndex + 1 ? 'bg-indigo-100' : 'bg-indigo-500']"> << </a></div>
+                <div><a class="text-white px-5 py-2 mr-2" @click="increaseCarouselIndex()" :class="[ charts.length && carouselIndex - 1 >= 0 ? 'bg-indigo-100' : 'bg-indigo-500']"> >> </a></div>
                 <div class="flex-1"></div>
             </div>
         </div>
