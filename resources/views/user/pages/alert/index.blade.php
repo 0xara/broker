@@ -8,7 +8,7 @@
 </head>
 <body>
 <div class="flex flex-row">
-    <div class="bg-gray flex-1 p-10" style="max-width: 300px;">
+    <div class="bg-gray flex-1 p-10 font-bold text-pink-500" style="max-width: 900px;">
         <ul>
             <li class="pb-5"><a href="{{action('User\UserAlertController@index')}}">List Of Alerts</a></li>
             <li class=""><a href="{{action('User\UserAlertController@create')}}">Create An Alert</a></li>
@@ -18,24 +18,24 @@
         <table class="border-collapse border w-full">
             <thead>
             <tr>
-                <th class="border">broker</th>
-                <th class="border">symbol</th>
-                <th class="border">operator</th>
-                <th class="border">price</th>
-                <th class="border">active</th>
-                <th class="border">repeat</th>
-                <th class="border">#</th>
+                <th class="border p-3 text-center">broker</th>
+                <th class="border p-3 text-center">symbol</th>
+                <th class="border p-3 text-center">operator</th>
+                <th class="border p-3 text-center">price</th>
+                <th class="border p-3 text-center">active</th>
+                <th class="border p-3 text-center">repeat</th>
+                <th class="border p-3 text-center">#</th>
             </tr>
             </thead>
             @foreach($alerts as $alert)
                 <tr>
-                    <td class="border">{{$alert->broker->name}}</td>
-                    <td class="border">{{$alert->symbol}}</td>
-                    <td class="border">{{$alert->operator}}</td>
-                    <td class="border">{{$alert->price}}</td>
-                    <td class="border">{{$alert->active}}</td>
-                    <td class="border">{{$alert->repeat}}</td>
-                    <td class="border">
+                    <td class="border p-3 text-center">{{$alert->broker->name}}</td>
+                    <td class="border p-3 text-center">{{$alert->symbol}}</td>
+                    <td class="border p-3 text-center">{{$alert->operator}}</td>
+                    <td class="border p-3 text-center">{{(float) $alert->price}}</td>
+                    <td class="border p-3 text-center">{{$alert->active}}</td>
+                    <td class="border p-3 text-center">{{$alert->repeat}}</td>
+                    <td class="border p-3 text-center">
                         <a href="{{action('User\UserAlertController@edit',[$alert->getKey()])}}">Edit</a>
                     </td>
                 </tr>

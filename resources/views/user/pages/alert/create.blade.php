@@ -11,7 +11,7 @@
 </head>
 <body>
     <div id="app" class="flex flex-row">
-        <div class="bg-gray flex-1 p-10" style="max-width: 300px;">
+        <div class="bg-gray flex-1 p-10 font-bold text-pink-500" style="max-width: 300px;">
             <ul>
                 <li class="pb-5"><a href="{{action('User\UserAlertController@index')}}">List Of Alerts</a></li>
                 <li class=""><a href="{{action('User\UserAlertController@create')}}">Create An Alert</a></li>
