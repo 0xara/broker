@@ -9,7 +9,7 @@
         [v-cloak] { display:none; }
     </style>
 </head>
-<body>
+<body class="bg-gray-700">
     <div id="app" class="flex flex-row">
         <div class="bg-gray flex-1 p-10 font-bold text-pink-500" style="max-width: 300px;">
             <ul>
@@ -31,7 +31,7 @@
                 @csrf
                 <input type="hidden" name="broker_id" value="1">
                 <label class="block mb-5">
-                    <span class="text-gray-700">symbol</span>
+                    <span class="text-gray-300">symbol</span>
                     <span v-if="currentPrice" class="font-bold" :class="{ 'text-green-700': lastPrice < currentPrice, 'text-red-700': lastPrice > currentPrice }" v-text="'('+currentPrice+')'"></span>
                     <select name="symbol" class="block w-full mt-1 form-select"  @change="onSymbolChange($event)" ref="symbolInput">
                         <option value="">select symbol</option>
@@ -49,7 +49,7 @@
                     </select>
                 </label>
                 <label class="block mb-5">
-                    <span class="text-gray-700">Operator</span>
+                    <span class="text-gray-300">Operator</span>
                     <select name="operator" class="block w-full mt-1 form-select"  @change="onOperatorChange($event)">
                         <option value="">select operator</option>
                         @foreach(\App\Models\Alert::OPERATOR_TITLES as $key => $title)
@@ -62,15 +62,15 @@
                     </select>
                 </label>
                 <label class="block mb-5" v-cloak>
-                    <span class="text-gray-700">Price</span>
+                    <span class="text-gray-300">Price</span>
                     <input type="text" name="price" class="mt-1 block w-full form-input" value="{{old('price')}}">
                 </label>
                 <label class="block">
-                    <span class="text-gray-700">Additional details</span>
+                    <span class="text-gray-300">Additional details</span>
                     <textarea name="details" class="mt-1 block w-full form-textarea" rows="2"></textarea>
                 </label>
                 <label class="block mb-5">
-                    <span class="text-gray-700">Charts</span>
+                    <span class="text-gray-300">Charts</span>
                     <span class="block flex mt-1">
                         <span class="block flex-1">
                             <input type="text" class="block w-full form-input" v-model="chartTemp">

@@ -6,7 +6,7 @@
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/@tailwindcss/custom-forms@0.2.1/dist/custom-forms.min.css" rel="stylesheet">
 </head>
-<body>
+<body class="bg-gray-700">
 <div id="app" class="flex flex-row">
     <div class="bg-gray flex-1 p-10 font-bold text-pink-500" style="max-width: 300px;">
         <ul>
