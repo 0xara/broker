@@ -127,7 +127,7 @@
                 operator: '',
                 charts: [],
                 chartTemp: '',
-                carouselIndex: ''
+                carouselIndex: 0
             },
 
             mounted() {
