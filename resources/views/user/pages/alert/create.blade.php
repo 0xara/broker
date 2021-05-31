@@ -10,8 +10,14 @@
     </style>
 </head>
 <body>
-    <div id="app">
-        <div class="container m-auto mt-10" style="max-width: 600px;">
+    <div id="app" class="flex flex-row">
+        <div class="bg-gray flex-1 p-10" style="max-width: 300px;">
+            <ul>
+                <li class="pb-5"><a href="{{action('User\UserAlertController@index')}}">List Of Alerts</a></li>
+                <li class=""><a href="{{action('User\UserAlertController@create')}}">Create An Alert</a></li>
+            </ul>
+        </div>
+        <div class="mt-10 flex-1" style="max-width: 600px;">
             @if ($errors->any())
                 <div class="alert alert-danger">
                     <ul>

@@ -20,7 +20,7 @@ class CreateAlertsTable extends Migration
             $table->string('symbol')->index();
             $table->string('operator');
             $table->string('current_position');
-            $table->decimal('price')->nullable();
+            $table->decimal('price',20,13)->nullable();
             $table->boolean('active')->default(1);
             $table->boolean('repeat')->default(1);
             $table->timestamps();
