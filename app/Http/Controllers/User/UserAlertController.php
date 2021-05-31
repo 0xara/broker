@@ -12,15 +12,25 @@ use Illuminate\Validation\ValidationException;
 
 class UserAlertController extends Controller
 {
+    const SORT = [
+        'create' => 'created_at',
+        'update' => 'updated_at',
+        'symbol' => 'symbol',
+        'broker' => 'broker',
+        'active' => 'active',
+    ];
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
         return view('user.pages.alert.index')->with([
-            'alerts' => Alert::with('broker')->paginate()
+            'alerts' => Alert::with('broker')->when($request->input('sortBy'),function ($q, $val) {
+                if(in_array($val,array_keys(self::SORT))) /** @var Alert $q */ $q->orderBy(self::SORT[$val]);
+            })->paginate(),
         ]);
     }
 
