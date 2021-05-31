@@ -8,13 +8,13 @@
 </head>
 <body>
 <div class="flex flex-row">
-    <div class="bg-gray flex-1 p-10 font-bold text-pink-500" style="max-width: 900px;">
+    <div class="bg-gray flex-1 p-10 font-bold text-pink-500" style="max-width: 300px;">
         <ul>
             <li class="pb-5"><a href="{{action('User\UserAlertController@index')}}">List Of Alerts</a></li>
             <li class=""><a href="{{action('User\UserAlertController@create')}}">Create An Alert</a></li>
         </ul>
     </div>
-    <div class="mt-10 flex-1" style="max-width: 600px;">
+    <div class="mt-10 flex-1" style="max-width: 900px;">
         <table class="border-collapse border w-full">
             <thead>
             <tr>
@@ -36,7 +36,7 @@
                     <td class="border p-3 text-center">{{$alert->active}}</td>
                     <td class="border p-3 text-center">{{$alert->repeat}}</td>
                     <td class="border p-3 text-center">
-                        <a href="{{action('User\UserAlertController@edit',[$alert->getKey()])}}">Edit</a>
+                        <a class="font-bold text-pink-500" href="{{action('User\UserAlertController@edit',[$alert->getKey()])}}">Edit</a>
                     </td>
                 </tr>
             @endforeach
