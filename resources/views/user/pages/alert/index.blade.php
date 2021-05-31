@@ -14,7 +14,7 @@
             <li class=""><a href="{{action('User\UserAlertController@create')}}">Create An Alert</a></li>
         </ul>
     </div>
-    <div class="mt-10 flex-1" style="max-width: 900px;">
+    <div class="mt-10 flex-1">
         <table class="border-collapse border w-full">
             <thead>
             <tr>
