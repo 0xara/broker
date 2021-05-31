@@ -7,7 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/@tailwindcss/custom-forms@0.2.1/dist/custom-forms.min.css" rel="stylesheet">
 </head>
 <body>
-<div id="#app" class="flex flex-row">
+<div id="app" class="flex flex-row">
     <div class="bg-gray flex-1 p-10 font-bold text-pink-500" style="max-width: 300px;">
         <ul>
             <li class="pb-5"><a href="{{action('User\UserAlertController@index')}}">List Of Alerts</a></li>
@@ -45,10 +45,10 @@
                     <td class="border p-3 text-center">{{$alert->broker->name}}</td>
                     <td class="border p-3 text-center">
                         {{$alert->symbol}}
-                        <span v-if="priceData['{{$alert->symbol}}']" :class="[priceData['{{$alert->symbol}}'].color || 'bg-black']">
-                            <span v-if="priceData.length">(</span>
-                            <span v-if="priceData.length" v-text="priceData['{{$alert->symbol}}'].c || ''"></span>
-                            <span v-if="priceData.length">)</span>
+                        <span v-if="priceData['{{$alert->symbol}}']" :class="[priceData['{{$alert->symbol}}'].color || 'text-black']">
+                            <span v-if="priceData">(</span>
+                            <span v-if="priceData" v-text="parseFloat(priceData['{{$alert->symbol}}'].c) || ''"></span>
+                            <span v-if="priceData">)</span>
                         </span>
                     </td>
                     <td class="border p-3 text-center w-1">{{$alert->operator}}</td>
@@ -95,19 +95,21 @@
                 this.ws = new WebSocket(`wss://stream.binance.com:9443/ws/!miniTicker@arr`);
                 this.ws.onmessage = (event) => {
                     let data = JSON.parse(event.data);
+                    let newData = {};
                     data.forEach((item) => {
-                        let oldItem = this.priceData[item.s];
+                        let oldItem = this.priceData[item.s] || '';
                         if(oldItem) {
                             item.color = oldItem.color;
                             if(oldItem.c > item.c) {
-                                item.color = 'bg-green-700';
+                                item.color = 'text-green-700';
                             }
                             if(oldItem.c < item.c) {
-                                item.color = 'bg-red-700';
+                                item.color = 'text-red-700';
                             }
                         }
-                        this.priceData[item.s] = item;
-                    })
+                        newData[item.s] = item;
+                    });
+                    this.priceData = {...this.priceData, ...newData};
                 }
             }
         }
