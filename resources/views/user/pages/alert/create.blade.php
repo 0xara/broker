@@ -105,7 +105,7 @@
             </form>
         </div>
         <div class="flex-1 px-10 mt-10">
-            <a :href="charts[carouselIndex ? carouselIndex : 0]" v-if="charts.length > 0">
+            <a target="_blank" :href="charts[carouselIndex ? carouselIndex : 0]" v-if="charts.length > 0">
                 <img :src="charts[carouselIndex ? carouselIndex : 0]" alt="">
             </a>
             <div class="flex justify-between mt-5" v-if="charts.length > 0">
