@@ -21,7 +21,7 @@
                 <th class="border text-gray-300 bg-gray-700 p-3 text-center">
                     <a href="{{action('User\UserAlertController@index',['sortBy' => 'broker'])}}">broker</a>
                 </th>
-                <th class="border text-gray-300 bg-gray-700 p-3 text-center">
+                <th class="border text-gray-300 bg-gray-700 p-3 text-center w-64">
                     <a href="{{action('User\UserAlertController@index',['sortBy' => 'symbol'])}}">symbol</a>
                 </th>
                 <th class="border text-gray-300 bg-gray-700 p-3 text-center w-1">operator</th>
