@@ -105,9 +105,12 @@
             </form>
         </div>
         <div class="flex-1 px-40 mt-10 flex flex-col justify-center">
-            <a target="_blank" :href="charts[carouselIndex ? carouselIndex : 0]" v-if="charts.length > 0">
-                <img :src="charts[carouselIndex ? carouselIndex : 0]" alt="">
-            </a>
+            <div v-if="charts.length > 0" class="relative">
+                <a class="absolute cursor-pointer font-black right-2.5 top-3" @click="charts.splice(carouselIndex ? carouselIndex : 0, 1)">X</a>
+                <a target="_blank" :href="charts[carouselIndex ? carouselIndex : 0]">
+                    <img :src="charts[carouselIndex ? carouselIndex : 0]" alt="">
+                </a>
+            </div>
             <div class="flex justify-between mt-5" v-if="charts.length > 0">
                 <div class="flex-1"></div>
                 <div><a class="text-white px-5 py-2" @click="decreaseCarouselIndex()" :class="[ charts.length && charts.length != carouselIndex + 1 ? 'bg-indigo-100' : 'bg-indigo-500']"> << </a></div>
