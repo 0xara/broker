@@ -105,7 +105,7 @@
                 </div>
             </form>
         </div>
-        <div class="flex-1 px-10 mt-10">
+        <div class="flex-1 px-40 mt-10 flex flex-col justify-center">
             <a target="_blank" :href="charts[carouselIndex ? carouselIndex : 0]" v-if="charts.length > 0">
                 <img :src="charts[carouselIndex ? carouselIndex : 0]" alt="">
             </a>
