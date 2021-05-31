@@ -42,8 +42,8 @@
             </thead>
             @foreach($alerts as $alert)
                 <tr>
-                    <td class="border text-gray-400 p-3 text-center">{{$alert->broker->name}}</td>
-                    <td class="border text-gray-400 p-3 text-center font-bold">
+                    <td class="border text-gray-400 bg-gray-800 p-3 text-center">{{$alert->broker->name}}</td>
+                    <td class="border text-gray-400 bg-gray-800 p-3 text-center font-bold">
                         {{$alert->symbol}}
                         <span v-if="priceData['{{$alert->symbol}}']" :class="[priceData['{{$alert->symbol}}'].color || 'text-black']">
                             <span v-if="priceData">(</span>
@@ -51,14 +51,14 @@
                             <span v-if="priceData">)</span>
                         </span>
                     </td>
-                    <td class="border text-gray-400 p-3 text-center w-1">{{$alert->operator}}</td>
-                    <td class="border text-gray-400 p-3 text-center">{{(float) $alert->price}}</td>
-                    <td class="border text-gray-400 p-3 text-center w-1">{{$alert->active}}</td>
-                    <td class="border text-gray-400 p-3 text-center w-1">{{$alert->repeat}}</td>
-                    <td class="border text-gray-400 p-3 text-center">{{$alert->details}}</td>
-                    <td class="border text-gray-400 p-3 text-center w-1">{{\App\Acme\CarbonFa\CarbonFa::setCarbon($alert->created_at)->toJalali(true,'Y/m/d H:i')}}</td>
-                    <td class="border text-gray-400 p-3 text-center w-1">{{\App\Acme\CarbonFa\CarbonFa::setCarbon($alert->updated_at)->toJalali(true,'Y/m/d H:i')}}</td>
-                    <td class="border text-gray-400 p-3 text-center">
+                    <td class="border text-gray-400 bg-gray-800 p-3 text-center w-1">{{$alert->operator}}</td>
+                    <td class="border text-gray-400 bg-gray-800 p-3 text-center">{{(float) $alert->price}}</td>
+                    <td class="border text-gray-400 bg-gray-800 p-3 text-center w-1">{{$alert->active}}</td>
+                    <td class="border text-gray-400 bg-gray-800 p-3 text-center w-1">{{$alert->repeat}}</td>
+                    <td class="border text-gray-400 bg-gray-800 p-3 text-center">{{$alert->details}}</td>
+                    <td class="border text-gray-400 bg-gray-800 p-3 text-center w-1">{{\App\Acme\CarbonFa\CarbonFa::setCarbon($alert->created_at)->toJalali(true,'Y/m/d H:i')}}</td>
+                    <td class="border text-gray-400 bg-gray-800 p-3 text-center w-1">{{\App\Acme\CarbonFa\CarbonFa::setCarbon($alert->updated_at)->toJalali(true,'Y/m/d H:i')}}</td>
+                    <td class="border text-gray-400 bg-gray-800 p-3 text-center">
                         <a class="font-bold text-pink-500" href="{{action('User\UserAlertController@edit',[$alert->getKey()])}}">Edit</a>
                         <span class="mr-3 ml-3">|</span>
                         <form class="inline-block" action="{{action('User\UserAlertController@destroy', [$alert->getKey()])}}" method="post">
