@@ -64,7 +64,7 @@
                 </label>
                 <label class="block mb-5">
                     <span class="text-gray-700">Price</span>
-                    <input type="text" name="price" class="mt-1 block w-full form-input" value="{{old('price', $alert->price)}}">
+                    <input type="text" name="price" class="mt-1 block w-full form-input" value="{{(float) old('price', $alert->price)}}">
                 </label>
                 <div class="block">
                     <div class="mt-2">
