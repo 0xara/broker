@@ -124,7 +124,9 @@
             </table>
         </div>
     </div>
-    {{ $alerts->links() }}
+    <div class="mt-3 mb-3">
+        {{ $alerts->links() }}
+    </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
 <script>
