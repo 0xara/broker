@@ -7,31 +7,31 @@
     <link href="https://cdn.jsdelivr.net/npm/@tailwindcss/custom-forms@0.2.1/dist/custom-forms.min.css" rel="stylesheet">
     <style>
         .pagination {
-        'display': 'flex',
-        'justify-content': 'center',
-        'list-style': 'none',
-        'padding': '0',
+        display: flex;
+        justify-content: center;
+        list-style: none;
+        padding: 0;
         }
 
 /*        .pagination .page-item config.item
         .pagination .page-item:hover config.itemHover*/
         .pagination .page-item .page-link {
-        'padding': '.75rem',
-        'display': 'block',
-        'text-decoration': 'none',
-        'border-top-width': '1px',
-        'border-left-width': '1px',
-        'border-bottom-width': '1px',
-        'background-color': '#ffffff',
-        'color': color,
+        padding: .75rem;
+        display: block;
+        text-decoration: none;
+        border-top-width: 1px;
+        border-left-width: 1px;
+        border-bottom-width: 1px;
+        background-color: #ffffff;
+        color: white;
         }
 
         .pagination .page-item .page-link:hover {
-        'background-color': '#f1f5f8',
+        background-color: #f1f5f8;
         }
         .pagination .page-item:first-child .page-link {
-        'border-top-left-radius': '.25rem',
-        'border-bottom-left-radius': '.25rem',
+        border-top-left-radius: .25rem;
+        border-bottom-left-radius: .25rem;
         }
 /*        .pagination .page-item:first-child .page-link:hover config.linkFirstHover
         .pagination .page-item:nth-child(2) .page-link config.linkSecond
@@ -39,20 +39,20 @@
         .pagination .page-item:nth-last-child(2) .page-link config.linkBeforeLast
         .pagination .page-item:nth-last-child(2) .page-link:hover config.linkBeforeLastHover*/
         .pagination .page-item:last-child .page-link {
-        'border-right-width': '1px',
-        'border-top-right-radius': '.25rem',
-        'border-bottom-right-radius': '.25rem',
+        border-right-width: 1px;
+        border-top-right-radius: .25rem;
+        border-bottom-right-radius: .25rem;
         }
         /*.pagination .page-item:last-child .page-link:hover config.linkLastHover*/
         .pagination .page-item.active .page-link {
-        'background-color': color,
-        'border-color': color,
-        'color': '#ffffff'
+            background-color: blue;
+            border-color: blue;
+            color: white;
         }
 /*        .pagination .page-item.active .page-link:hover config.linkActiveHover*/
         .pagination .page-item.disabled .page-link {
-        'background-color': '#f1f5f8',
-        'color': '#8795a1',
+        background-color: #f1f5f8;
+        color: #8795a1;
         }
         /*.pagination .page-item.disabled .page-link:hover config.linkDisabledHover*/
     </style>
