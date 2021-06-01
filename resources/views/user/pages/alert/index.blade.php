@@ -23,7 +23,7 @@
         border-left-width: 1px;
         border-bottom-width: 1px;
         background-color: #ffffff;
-        color: white;
+        color: black;
         }
 
         .pagination .page-item .page-link:hover {
