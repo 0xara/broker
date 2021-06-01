@@ -82,9 +82,11 @@ class AlertActivated extends Notification
     public function toTelegram($notifiable)
     {
         $content = "Alert: ".$this->alert->symbol." is ".Alert::OPERATOR_TITLES[$this->alert->operator]." ".((float) $this->alert->price);
+        $content .= ($this->alert->details ? "\n {$this->alert->details}" : '');
+        $content .= is_array($this->alert->charts) && count($this->alert->charts) ?  "\n".$this->alert->charts[0] : '';
 
         return TelegramMessage::create()
             ->to($notifiable->telegram_user_id)
-            ->content($content. ($this->alert->details ? "\n {$this->alert->details}" : ''));
+            ->content($content);
     }
 }
