@@ -18,6 +18,11 @@ class AlertActivated extends Notification
     /** @var Alert  */
     public $alert;
 
+    const OPERATORS = [
+        Alert::GTE => ' > ',
+        Alert::LTE => ' < ',
+    ];
+
     /**
      * Create a new notification instance.
      *
@@ -81,7 +86,7 @@ class AlertActivated extends Notification
 
     public function toTelegram($notifiable)
     {
-        $content = "Alert: ".$this->alert->symbol." is ".Alert::OPERATOR_TITLES[$this->alert->operator]." ".((float) $this->alert->price);
+        $content = "Alert: ".$this->alert->symbol.self::OPERATORS[$this->alert->operator].((float) $this->alert->price);
         $content .= ($this->alert->details ? "\n {$this->alert->details}" : '');
         $content .= is_array($this->alert->charts) && count($this->alert->charts) ?  "\n".$this->alert->charts[0] : '';
 
