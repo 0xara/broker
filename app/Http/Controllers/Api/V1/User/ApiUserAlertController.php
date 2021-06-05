@@ -73,7 +73,7 @@ class ApiUserAlertController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return array|\Illuminate\Http\RedirectResponse
      */
     public function store(UserAlertRequest $request)
     {
@@ -104,6 +104,15 @@ class ApiUserAlertController extends Controller
         /** @var User $user */
         $user = auth()->user();
         $user->alerts()->save($alert);
+
+
+        if($request->wantsJson()) {
+            return [
+                'alert' => [
+                    'id' => $alert->getKey()
+                ]
+            ];
+        }
 
         return \Redirect::action('User\UserAlertController@edit',[$alert->getKey()]);
     }
@@ -156,7 +165,7 @@ class ApiUserAlertController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\RedirectResponse
+     * @return array|\Illuminate\Http\RedirectResponse
      */
     public function update(UserAlertRequest $request, $id)
     {
@@ -183,6 +192,14 @@ class ApiUserAlertController extends Controller
                 'charts' => $request->input('charts') ?: [],
             ]
         ));
+
+        if($request->wantsJson()) {
+            return [
+                'alert' => [
+                    'id' => $alert->getKey()
+                ]
+            ];
+        }
 
         return \Redirect::action('User\UserAlertController@edit',[$alert->getKey()]);
     }
