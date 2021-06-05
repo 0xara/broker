@@ -54,7 +54,7 @@ class ApiUserAlertController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return array|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create(Request $request)
     {
@@ -63,6 +63,13 @@ class ApiUserAlertController extends Controller
 /*        if(!$symbols->contains($request->old('symbol'))) {
             $request->flashOnly('symbol');
         }*/
+
+        if($request->wantsJson()) {
+            return [
+                'symbols' => $this->prepareSymbols($symbols),
+                'operator_titles' => Alert::OPERATOR_TITLES
+            ];
+        }
 
         return view('user.pages.alert.create')->with([
             'symbols' => $this->prepareSymbols($symbols)
