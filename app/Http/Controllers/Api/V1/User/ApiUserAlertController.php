@@ -220,15 +220,19 @@ class ApiUserAlertController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\RedirectResponse
+     * @return array|\Illuminate\Http\RedirectResponse
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         /** @var User $user */
         $user = auth()->user();
         $alert = $user->alerts()->findOrFail($id);
 
         $alert->delete();
+
+        if($request->wantsJson()) {
+            return $this->index($request);
+        }
 
         return back();
     }
