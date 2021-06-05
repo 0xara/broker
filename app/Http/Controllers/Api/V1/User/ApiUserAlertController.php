@@ -123,7 +123,7 @@ class ApiUserAlertController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return array|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit(Request $request, $id)
     {
@@ -132,6 +132,13 @@ class ApiUserAlertController extends Controller
         $alert = $user->alerts()->findOrFail($id);
 
         $symbols = Binance::getSymbols();
+
+        if($request->wantsJson()) {
+            return [
+                'alert' => $alert,
+                'symbols' => $this->prepareSymbols($symbols)
+            ];
+        }
 
 /*        if(!$symbols->contains($request->old('symbol'))) {
             $request->flashOnly('symbol');
