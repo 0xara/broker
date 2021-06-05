@@ -19,7 +19,7 @@
         "laravel-notification-channels/telegram": "^0.5.1",
         "laravel/framework": "^7.29",
         "laravel/helpers": "^1.0",
-        "laravel/sanctum": "^2.9",
+        "laravel/sanctum": "^2.11",
         "laravel/slack-notification-channel": "^2.3",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^2.4",

@@ -18,10 +18,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::middleware('auth')->group(function () {
-    Route::resource('/alert','User\UserAlertController');
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::group([], function (){
+    require base_path('routes/web/web.php');
 });
 
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');

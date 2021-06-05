@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers\Api\V1\User;
 
 use App\Acme\Broker\Binance;
+use App\Acme\CarbonFa\CarbonFa;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\UserAlertRequest;
 use App\Models\Alert;
@@ -10,7 +11,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
-class UserAlertController extends Controller
+class ApiUserAlertController extends Controller
 {
     const SORT = [
         'create' => 'created_at',
@@ -23,15 +24,31 @@ class UserAlertController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return array
      */
     public function index(Request $request)
     {
-        return view('user.pages.alert.index')->with([
-            'alerts' => Alert::with('broker')->when($request->input('sortBy'),function ($q, $val) {
-                if(in_array($val,array_keys(self::SORT))) /** @var Alert $q */ $q->orderBy(self::SORT[$val]);
-            })->paginate(),
-        ]);
+        $alerts =  Alert::with('broker')->when($request->input('sortBy'),function ($q, $val) {
+            if(in_array($val,array_keys(self::SORT))) /** @var Alert $q */ $q->orderBy(self::SORT[$val]);
+        })->paginate();
+
+        return [
+            'alerts' =>fractal($alerts)
+                ->transformWith(function ($alert) {
+                    return [
+                        'id' => $alert->id,
+                        'symbol' => $alert->symbol,
+                        'broker' => ['name' => $alert->broker->name],
+                        'operator' => $alert->operator,
+                        'price' => (float) $alert->price,
+                        'active' => $alert->active,
+                        'repeat' => $alert->repeat,
+                        'details' => $alert->details,
+                        'created_at' => CarbonFa::setCarbon($alert->created_at)->toJalali(true,'Y/m/d H:i'),
+                        'updated_at' => CarbonFa::setCarbon($alert->updated_at)->toJalali(true,'Y/m/d H:i'),
+                    ];
+                })->toArray()
+        ];
     }
 
     /**
