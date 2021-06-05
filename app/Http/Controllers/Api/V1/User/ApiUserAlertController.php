@@ -151,7 +151,10 @@ class ApiUserAlertController extends Controller
 
         if($request->wantsJson()) {
             return [
-                'alert' => $alert,
+                'alert' => fractal()->item($alert)->transformWith(function ($alert) {
+                    /** @var Alert $alert */
+                    return array_merge($alert->toArray(), ['price' => (float) $alert->price]);
+                })->toArray(),
                 'symbols' => $this->prepareSymbols($symbols),
                 'operator_titles' => Alert::OPERATOR_TITLES
             ];
@@ -162,10 +165,7 @@ class ApiUserAlertController extends Controller
         }*/
 
         return view('user.pages.alert.edit')->with([
-            'alert' => fractal()->item($alert)->transformWith(function ($alert) {
-                /** @var Alert $alert */
-                return array_merge($alert->toArray(), ['price' => (float) $alert->price]);
-            }),
+            'alert' => $alert,
             'symbols' => $this->prepareSymbols($symbols),
         ]);
     }
