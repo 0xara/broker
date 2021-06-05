@@ -136,7 +136,8 @@ class ApiUserAlertController extends Controller
         if($request->wantsJson()) {
             return [
                 'alert' => $alert,
-                'symbols' => $this->prepareSymbols($symbols)
+                'symbols' => $this->prepareSymbols($symbols),
+                'operator_titles' => Alert::OPERATOR_TITLES
             ];
         }
 
@@ -146,7 +147,7 @@ class ApiUserAlertController extends Controller
 
         return view('user.pages.alert.edit')->with([
             'alert' => $alert,
-            'symbols' => $this->prepareSymbols($symbols)
+            'symbols' => $this->prepareSymbols($symbols),
         ]);
     }
 
