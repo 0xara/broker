@@ -162,7 +162,10 @@ class ApiUserAlertController extends Controller
         }*/
 
         return view('user.pages.alert.edit')->with([
-            'alert' => $alert,
+            'alert' => fractal()->item($alert)->transformWith(function ($alert) {
+                /** @var Alert $alert */
+                return array_merge($alert->toArray(), ['price' => (float) $alert->price]);
+            }),
             'symbols' => $this->prepareSymbols($symbols),
         ]);
     }
