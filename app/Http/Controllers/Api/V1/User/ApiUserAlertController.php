@@ -10,6 +10,7 @@ use App\Models\Alert;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use Spatie\Fractalistic\ArraySerializer;
 
 class ApiUserAlertController extends Controller
 {
@@ -154,7 +155,8 @@ class ApiUserAlertController extends Controller
                 'alert' => fractal()->item($alert)->transformWith(function ($alert) {
                     /** @var Alert $alert */
                     return array_merge($alert->toArray(), ['price' => (float) $alert->price]);
-                })->toArray(),
+                })->serializeWith(ArraySerializer::class)
+                    ->toArray(),
                 'symbols' => $this->prepareSymbols($symbols),
                 'operator_titles' => Alert::OPERATOR_TITLES
             ];
