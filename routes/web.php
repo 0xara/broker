@@ -14,13 +14,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group([], function (){
     require base_path('routes/web/web.php');
 });
 
+Route::get('/{any?}', function () {
+    return view('user.index');
+})
+    ->where('any', '.*');
