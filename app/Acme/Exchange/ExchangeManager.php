@@ -21,7 +21,7 @@ class ExchangeManager
      */
     public static function getExchange($name)
     {
-        $exchange = (string) Str::of($name)->title()->replace('-','');
+        $exchange = (string) Str::of($name)->title()->replace(' ','');
 
         if(!$exchange = self::$drivers[$exchange] ?: null) return null;
 
