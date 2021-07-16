@@ -116,7 +116,7 @@ class TehranStockExchange implements Exchangable
      * @param bool $update
      * @return mixed
      */
-    public function getSymbolPrice($symbol, $update = false)
+    public static function getSymbolPrice($symbol, $update = false)
     {
         if($update) self::$analyzeStockPageDataResponse = null;
 
