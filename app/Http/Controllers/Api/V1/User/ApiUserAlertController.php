@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Api\V1\User;
 
-use App\Acme\Broker\Binance;
+use App\Acme\Exchange\Binance;
 use App\Acme\CarbonFa\CarbonFa;
+use App\Acme\Exchange\ExchangeManager;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\UserAlertRequest;
 use App\Models\Alert;
+use App\Models\Exchange;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -18,7 +20,7 @@ class ApiUserAlertController extends Controller
         'create' => 'created_at',
         'update' => 'updated_at',
         'symbol' => 'symbol',
-        'broker' => 'broker',
+        'exchange' => 'exchange',
         'active' => 'active',
     ];
 
@@ -29,7 +31,7 @@ class ApiUserAlertController extends Controller
      */
     public function index(Request $request)
     {
-        $alerts =  Alert::with('broker')->when($request->input('sortBy'),function ($q, $val) {
+        $alerts =  Alert::with('exchange')->when($request->input('sortBy'),function ($q, $val) {
             if(in_array($val,array_keys(self::SORT))) /** @var Alert $q */ $q->orderBy(self::SORT[$val]);
         })->paginate();
 
@@ -39,7 +41,7 @@ class ApiUserAlertController extends Controller
                     return [
                         'id' => $alert->id,
                         'symbol' => $alert->symbol,
-                        'broker' => ['name' => $alert->broker->name],
+                        'exchange' => ['name' => $alert->exchange->name],
                         'operator' => $alert->operator,
                         'price' => (float) $alert->price,
                         'active' => $alert->active,
@@ -59,7 +61,13 @@ class ApiUserAlertController extends Controller
      */
     public function create(Request $request)
     {
-        $symbols = Binance::getSymbols();
+        $exchange_id = $request->input('exchange');
+
+        $exchanges = Exchange::select(['name','id'])->get();
+
+        $exchange = $exchanges->where('id','=',$exchange_id)->first();
+
+        $symbols = $exchange ? ExchangeManager::getExchange($exchange->name)->getSymbols() : [];
 
 /*        if(!$symbols->contains($request->old('symbol'))) {
             $request->flashOnly('symbol');
@@ -68,7 +76,15 @@ class ApiUserAlertController extends Controller
         if($request->wantsJson()) {
             return [
                 'symbols' => $this->prepareSymbols($symbols),
-                'operator_titles' => Alert::OPERATOR_TITLES
+                'operator_titles' => Alert::OPERATOR_TITLES,
+                'exchanges' => fractal()->collection($exchanges)->transformWith(function ($exchange) {
+                    return [
+                        'exchange_id' => $exchange->id,
+                        'name' => $exchange->name,
+                    ];
+                })
+                ->serializeWith(ArraySerializer::class)
+                ->toArray()
             ];
         }
 
@@ -148,7 +164,11 @@ class ApiUserAlertController extends Controller
         $user = auth()->user();
         $alert = $user->alerts()->findOrFail($id);
 
+        $exchange_id = $request->input('exchange');
+
         $symbols = Binance::getSymbols();
+
+        $exchanges = Exchange::select(['name','id'])->get();
 
         if($request->wantsJson()) {
             return [
@@ -158,7 +178,13 @@ class ApiUserAlertController extends Controller
                 })->serializeWith(ArraySerializer::class)
                     ->toArray(),
                 'symbols' => $this->prepareSymbols($symbols),
-                'operator_titles' => Alert::OPERATOR_TITLES
+                'operator_titles' => Alert::OPERATOR_TITLES,
+                'exchanges' => fractal()->collection($exchanges)->transformWith(function ($exchange) {
+                    return [
+                        'exchange_id' => $exchange->id,
+                        'name' => $exchange->name,
+                    ];
+                })
             ];
         }
 
@@ -246,7 +272,7 @@ class ApiUserAlertController extends Controller
         $result = [];
 
         foreach ($symbols as $symbol) {
-            if(!array_key_exists($symbol['quoteAsset'],$result)) {
+            if(!array_key_exists($symbol['c'],$result)) {
                 $result[$symbol['quoteAsset']] = [];
             }
             $result[$symbol['quoteAsset']][] = $symbol['symbol'];

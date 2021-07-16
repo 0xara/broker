@@ -38,7 +38,7 @@ import './vue/globalComponents';
 import rootMixin from  './vue/rootMixin';
 
 import './views/web/index';
-import './views/broker/index';
+import './views/exchange/index';
 
 const app = new Vue({
 

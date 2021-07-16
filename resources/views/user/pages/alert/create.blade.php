@@ -29,7 +29,7 @@
             @endif
             <form action="{{action('User\UserAlertController@store')}}" method="post">
                 @csrf
-                <input type="hidden" name="broker_id" value="1">
+                <input type="hidden" name="exchange_id" value="1">
                 <label class="block mb-5">
                     <span class="text-gray-300">Symbol</span>
                     <span v-if="currentPrice" class="font-bold" :class="{ 'text-green-700': lastPrice < currentPrice, 'text-red-700': lastPrice > currentPrice }" v-text="'('+currentPrice+')'"></span>

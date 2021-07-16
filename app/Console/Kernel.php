@@ -26,7 +26,9 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
 
-        $schedule->command('broker:watch-binance-price')->everyMinute();
+        $schedule->command('exchange:watch-binance-price')->everyMinute();
+
+        $schedule->command('exchange:watch-tehran-exchange-stock-datalist')->daily();
     }
 
     /**

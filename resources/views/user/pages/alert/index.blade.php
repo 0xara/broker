@@ -71,7 +71,7 @@
                 <thead>
                 <tr>
                     <th class="border text-gray-300 bg-gray-700 p-3 text-center">
-                        <a href="{{action('User\UserAlertController@index',['sortBy' => 'broker'])}}">broker</a>
+                        <a href="{{action('User\UserAlertController@index',['sortBy' => 'exchange'])}}">exchange</a>
                     </th>
                     <th class="border text-gray-300 bg-gray-700 p-3 text-center w-64">
                         <a href="{{action('User\UserAlertController@index',['sortBy' => 'symbol'])}}">symbol</a>
@@ -94,7 +94,7 @@
                 </thead>
                 @foreach($alerts as $alert)
                     <tr>
-                        <td class="border text-gray-400 bg-gray-800 p-3 text-center">{{$alert->broker->name}}</td>
+                        <td class="border text-gray-400 bg-gray-800 p-3 text-center">{{$alert->exchange->name}}</td>
                         <td class="border text-gray-400 bg-gray-800 p-3 text-left pl-12 font-bold">
                             {{$alert->symbol}}
                             <span v-if="priceData['{{$alert->symbol}}']" :class="[priceData['{{$alert->symbol}}'].color || 'text-black']">

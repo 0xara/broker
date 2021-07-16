@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Alert extends \Eloquent
 {
     protected $fillable = [
-        'broker_id',
+        'exchange_id',
         'symbol',
         'operator',
         'current_position',
@@ -58,8 +58,8 @@ class Alert extends \Eloquent
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function broker()
+    public function exchange()
     {
-        return $this->belongsTo(Broker::class, 'broker_id');
+        return $this->belongsTo(Exchange::class, 'exchange_id');
     }
 }

@@ -16,7 +16,7 @@ class CreateAlertsTable extends Migration
         Schema::create('alerts', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('broker_id');
+            $table->unsignedBigInteger('exchange_id');
             $table->string('symbol')->index();
             $table->string('operator');
             $table->string('current_position');

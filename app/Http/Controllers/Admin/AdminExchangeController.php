@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Broker;
+use App\Models\Exchange;
 use Illuminate\Http\Request;
 
-class AdminBrokerController extends Controller
+class AdminExchangeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +15,7 @@ class AdminBrokerController extends Controller
      */
     public function index()
     {
-        return view('admin.pages.broker.index');
+        return view('admin.pages.exchange.index');
     }
 
     /**
@@ -26,7 +26,7 @@ class AdminBrokerController extends Controller
     public function create()
     {
 
-        return view('admin.pages.broker.create');
+        return view('admin.pages.exchange.create');
     }
 
     /**
@@ -37,11 +37,11 @@ class AdminBrokerController extends Controller
      */
     public function store(Request $request)
     {
-        $broker = Broker::create([
+        $exchange = Exchange::create([
             'name' => $request->input('name')
         ]);
 
-        return \Redirect::action('Admin\AdminExchangeController@edit', [$broker->getKey()]);
+        return \Redirect::action('Admin\AdminExchangeController@edit', [$exchange->getKey()]);
     }
 
     /**
@@ -63,10 +63,10 @@ class AdminBrokerController extends Controller
      */
     public function edit($id)
     {
-        $broker = Broker::findOrFail($id);
+        $exchange = Exchange::findOrFail($id);
 
-        return view('admin.pages.broker.edit')->with([
-           'broker' => $broker
+        return view('admin.pages.exchange.edit')->with([
+           'exchange' => $exchange
         ]);
     }
 
@@ -79,13 +79,13 @@ class AdminBrokerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $broker = Broker::findOrFail($id);
+        $exchange = Exchange::findOrFail($id);
 
-        $broker->update([
+        $exchange->update([
             'name' => $request->input('name')
         ]);
 
-        return \Redirect::action('Admin\AdminExchangeController@edit', [$broker->getKey()]);
+        return \Redirect::action('Admin\AdminExchangeController@edit', [$exchange->getKey()]);
     }
 
     /**

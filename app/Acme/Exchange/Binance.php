@@ -1,12 +1,12 @@
 <?php
 
 
-namespace App\Acme\Broker;
+namespace App\Acme\Exchange;
 
 
 use Illuminate\Support\Str;
 
-class Binance
+class Binance implements Exchangable
 {
 
     /**
