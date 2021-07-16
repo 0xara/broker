@@ -272,7 +272,7 @@ class ApiUserAlertController extends Controller
         $result = [];
 
         foreach ($symbols as $symbol) {
-            if(!array_key_exists($symbol['c'],$result)) {
+            if(!array_key_exists($symbol['quoteAsset'],$result)) {
                 $result[$symbol['quoteAsset']] = [];
             }
             $result[$symbol['quoteAsset']][] = $symbol['symbol'];
