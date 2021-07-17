@@ -19,3 +19,8 @@ function log_info($message)
 
     \Log::info($message);
 }
+
+function fix_persian_word($word)
+{
+    return str_replace('ي','ی',$word);
+}

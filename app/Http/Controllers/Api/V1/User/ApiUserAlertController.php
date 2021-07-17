@@ -162,13 +162,12 @@ class ApiUserAlertController extends Controller
     {
         /** @var User $user */
         $user = auth()->user();
+        /** @var Alert $alert */
         $alert = $user->alerts()->findOrFail($id);
 
-        $exchange_id = $request->input('exchange');
-
-        $symbols = Binance::getSymbols();
-
         $exchanges = Exchange::select(['name','id'])->get();
+
+        $symbols = ExchangeManager::getExchange($alert->exchange->name)->getSymbols();
 
         if($request->wantsJson()) {
             return [
@@ -185,6 +184,8 @@ class ApiUserAlertController extends Controller
                         'name' => $exchange->name,
                     ];
                 })
+                ->serializeWith(ArraySerializer::class)
+                ->toArray()
             ];
         }
 

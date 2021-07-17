@@ -61,7 +61,7 @@ class TehranStockExchange implements Exchangable
         $name = with($response, function ($r) {
             preg_match("/LVal18AFC='(.*?)',/s",$r->body(),$array);
             $response = $array[1] ?? null;
-            return $response ?: null;
+            return fix_persian_word($response) ?: null;
         });
 
         if($name == "',DEven='',LSecVal='',CgrValCot='',Flow='',InstrumentID='")
@@ -79,14 +79,14 @@ class TehranStockExchange implements Exchangable
             }),
             "symbol" => $name,
             "group_name" => with($response, function ($r) {
-                preg_match("/LSecVal='([\D]*)',/s",$r->body(),$array);
+                preg_match("/LSecVal='(.*?)',/s",$r->body(),$array);
                 $response = $array[1] ?? null;
-                return $response ?: null;
+                return fix_persian_word($response) ?: null;
             }),
             "title" => with($response, function ($r) {
                 preg_match("/Title='(.*?)',/s",$r->body(),$array);
                 $response = $array[1] ?? null;
-                return $response ?: null;
+                return fix_persian_word($response) ?: null;
             }),
             "sectorPe" => with($response, function ($r) {
                 preg_match("/SectorPE='([\.\d]*)',/s",$r->body(),$array);
