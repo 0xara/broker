@@ -101,7 +101,11 @@ class ApiUserAlertController extends Controller
      */
     public function store(UserAlertRequest $request)
     {
-        $price = Binance::getSymbolPrice($request->input('symbol'));
+        $exchange_id = $request->input('exchange');
+
+        $exchange = Exchange::where('id','=',$exchange_id)->first();
+
+        $price = $exchange ? ExchangeManager::getExchange($exchange->name)->getSymbolPrice($request->input('symbol')) : '';
 
         if(!$price)
             throw ValidationException::withMessages(['']);
