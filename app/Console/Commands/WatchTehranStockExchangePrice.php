@@ -50,7 +50,6 @@ class WatchTehranStockExchangePrice extends Command
      */
     public function handle()
     {
-
         TehranStockExchangeSymbolsPricesUpdated::dispatch($prices = TehranStockExchange::getSymbolsPrices());
 
         SendAlertNotification::handle($prices);
