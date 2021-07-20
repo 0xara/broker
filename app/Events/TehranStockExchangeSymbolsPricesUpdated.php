@@ -14,6 +14,8 @@ class TehranStockExchangeSymbolsPricesUpdated implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    public $socket = [];
+
     /**
      * @var array
      */
