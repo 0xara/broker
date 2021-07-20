@@ -41,7 +41,7 @@ return [
                 'encrypted' => true,
                 'host' => 'alirezaghaei.com',
                 'port' => 443,
-                'scheme' => 'https',
+                'scheme' => 'wss',
                 'curl_options' => [
                     CURLOPT_SSL_VERIFYHOST => 0,
                     CURLOPT_SSL_VERIFYPEER => 0,
