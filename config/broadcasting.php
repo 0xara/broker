@@ -39,8 +39,8 @@ return [
                 'cluster' => env('PUSHER_APP_CLUSTER'),
                 'useTLS' => false,
                 'encrypted' => true,
-                'host' => '127.0.0.1',
-                'port' => 6001,
+                'host' => 'https://alirezaghaei.com/',
+                'port' => 443,
                 'scheme' => 'https',
                 'curl_options' => [
                     CURLOPT_SSL_VERIFYHOST => 0,
