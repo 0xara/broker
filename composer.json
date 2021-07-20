@@ -25,6 +25,7 @@
         "laravel/ui": "^2.4",
         "laravelcollective/html": "^6.1.0",
         "morilog/jalali": "3.*",
+        "pusher/pusher-php-server": "^7.0",
         "spatie/laravel-fractal": "^5.7"
     },
     "require-dev": {

@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Acme\Exchange\SendAlertNotification;
 use App\Acme\Exchange\TehranStockExchange;
+use App\Events\TehranStockExchangeSymbolsPricesUpdated;
 use App\Models\Alert;
 use App\Models\User;
 use App\Notifications\AlertActivated;
@@ -18,7 +19,7 @@ class WatchTehranStockExchangePrice extends Command
      *
      * @var string
      */
-    protected $signature = 'exchange:watch-tehran-exchange-price {seconds=15}';
+    protected $signature = 'exchange:watch-tehran-exchange-price';
 
     /**
      * The console command description.
@@ -49,24 +50,8 @@ class WatchTehranStockExchangePrice extends Command
      */
     public function handle()
     {
-        $seconds = $this->argument('seconds');
+        SendAlertNotification::handle($prices = TehranStockExchange::getSymbolsPrices());
 
-        $dt = Carbon::now();
-
-        $x = 60 / $seconds;
-
-        SendAlertNotification::handle(TehranStockExchange::getSymbolsPrices());
-        $x--;
-
-        /** time to close ended meetings before checking attendees */
-        time_sleep_until($dt->addSeconds($seconds)->timestamp);
-
-        do{
-
-            SendAlertNotification::handle(TehranStockExchange::getSymbolsPrices());
-
-            time_sleep_until($dt->addSeconds($seconds)->timestamp);
-
-        } while(--$x > 0);
+        TehranStockExchangeSymbolsPricesUpdated::dispatch($prices);
     }
 }

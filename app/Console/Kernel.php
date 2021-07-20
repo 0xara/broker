@@ -28,6 +28,8 @@ class Kernel extends ConsoleKernel
 
         $schedule->command('exchange:watch-binance-price')->everyMinute();
 
+        $schedule->command('exchange:watch-tehran-exchange-price')->everyTwoMinutes();
+
         $schedule->command('exchange:watch-tehran-exchange-stock-datalist')->daily();
     }
 
