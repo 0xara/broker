@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api\V1\User;
 
-use App\Acme\Exchange\Binance;
 use App\Acme\CarbonFa\CarbonFa;
 use App\Acme\Exchange\ExchangeManager;
 use App\Http\Controllers\Controller;
@@ -101,7 +100,7 @@ class ApiUserAlertController extends Controller
      */
     public function store(UserAlertRequest $request)
     {
-        $exchange_id = $request->input('exchange');
+        $exchange_id = $request->input('exchange_id');
 
         $exchange = Exchange::where('id','=',$exchange_id)->first();
 
@@ -216,7 +215,9 @@ class ApiUserAlertController extends Controller
         $user = auth()->user();
         $alert = $user->alerts()->findOrFail($id);
 
-        $price = Binance::getSymbolPrice($request->input('symbol'));
+        $exchange = Exchange::where('id','=',$request->input('exchange_id'))->first();
+
+        $price = $exchange ? ExchangeManager::getExchange($exchange->name)->getSymbolPrice($request->input('symbol')) : '';
 
         if(!$price)
             throw ValidationException::withMessages(['']);
