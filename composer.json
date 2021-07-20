@@ -26,7 +26,8 @@
         "laravelcollective/html": "^6.1.0",
         "morilog/jalali": "3.*",
         "pusher/pusher-php-server": "^7.0",
-        "spatie/laravel-fractal": "^5.7"
+        "spatie/laravel-fractal": "^5.7",
+        "ext-curl": "*"
     },
     "require-dev": {
         "facade/ignition": "^2.0",
