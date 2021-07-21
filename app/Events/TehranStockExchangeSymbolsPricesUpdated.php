@@ -9,6 +9,7 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Collection;
 use Spatie\Fractalistic\ArraySerializer;
 
 class TehranStockExchangeSymbolsPricesUpdated implements ShouldBroadcast
@@ -23,10 +24,16 @@ class TehranStockExchangeSymbolsPricesUpdated implements ShouldBroadcast
     /**
      * Create a new event instance.
      *
-     * @param array $prices
+     * @param Collection $prices
      */
     public function __construct($prices = [])
     {
+        if($prices->has('index')) {
+            $indexData = $prices->get('index');
+            $indexData['price'] =  $indexData['value'];
+            $prices->put('index',$indexData);
+        }
+
         $this->priceList = fractal()->collection($prices)->transformWith(function ($symbol) {
             return [
                 'symbol' => $symbol['symbol'],
