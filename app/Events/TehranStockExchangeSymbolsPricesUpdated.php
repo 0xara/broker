@@ -28,14 +28,6 @@ class TehranStockExchangeSymbolsPricesUpdated implements ShouldBroadcast
      */
     public function __construct($prices = [])
     {
-        $prices = collect($prices->all());
-
-        if($prices->has('index')) {
-            $indexData = $prices->get('index');
-            $indexData['price'] =  $indexData['value'];
-            $prices->put('index',$indexData);
-        }
-
         $this->priceList = fractal()->collection($prices)->transformWith(function ($symbol) {
             return [
                 'symbol' => $symbol['symbol'],
