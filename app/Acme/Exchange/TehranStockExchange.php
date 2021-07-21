@@ -277,9 +277,11 @@ class TehranStockExchange implements Exchangable
         })->keyBy('stock_code')->prepend([
             'symbol' => 'شاخص کل',
             'value' => $indexData[2],
-            'change_from_yesterday' => $indexResult[2],
-            'change_percentage' => $indexResult[3],
-            'change_state_from_yesterday' => in_array($indexResult[1],['pn','mn']) ? ($indexResult[1] == "pn" ? 'UP' : 'DOWN') : '',
+            'change_from_yesterday' => $indexResult[2] ?? '',
+            'change_percentage' => $indexResult[3] ?? '',
+            'change_state_from_yesterday' => with(count($indexResult) > 0 ? $indexResult : null, function ($indexResult) {
+                return in_array($indexResult[1],['pn','mn']) ? ($indexResult[1] == "pn" ? 'UP' : 'DOWN') : '';
+            }),
         ],'index');
     }
 }
