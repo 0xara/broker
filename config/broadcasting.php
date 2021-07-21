@@ -47,7 +47,8 @@ return [
                     CURLOPT_SSL_VERIFYPEER => 0,
                     CURLOPT_HTTPHEADER => [
                         "Connection: Upgrade",
-                        "Upgrade: websocket"
+                        "Upgrade: websocket",
+                        "Content-Type:application/json"
                     ]
                 ]
             ],
