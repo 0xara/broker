@@ -36,7 +36,6 @@ class TehranStockExchangeSymbolsPricesUpdated implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        $this->socket = [];
         return new Channel('tehran_stock_exchange');
     }
 
