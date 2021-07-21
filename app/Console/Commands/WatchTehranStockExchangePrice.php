@@ -101,7 +101,7 @@ class WatchTehranStockExchangePrice extends Command
     /**
      * @return false|array
      */
-    public function cacheExists()
+    public static function cacheExists()
     {
         $folder = Str::snake(class_basename(TehranStockExchange::class));
         $filename = CarbonFa::now()->format("Y_m_d");
