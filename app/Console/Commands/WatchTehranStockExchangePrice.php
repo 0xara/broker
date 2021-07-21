@@ -53,7 +53,7 @@ class WatchTehranStockExchangePrice extends Command
      */
     public function handle()
     {
-        $prices = TehranStockExchange::getSymbolsPrices();
+        $prices = self::getPrices();
 
         if($prices->has('index')) {
             $indexData = $prices->get('index');
