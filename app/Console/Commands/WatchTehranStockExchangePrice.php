@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Acme\CarbonFa\CarbonFa;
 use App\Acme\Exchange\SendAlertNotification;
 use App\Acme\Exchange\TehranStockExchange;
 use App\Events\TehranStockExchangeSymbolsPricesUpdated;
@@ -11,6 +12,8 @@ use App\Notifications\AlertActivated;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class WatchTehranStockExchangePrice extends Command
 {
@@ -61,5 +64,50 @@ class WatchTehranStockExchangePrice extends Command
         TehranStockExchangeSymbolsPricesUpdated::dispatch($prices);
 
         SendAlertNotification::handle($prices);
+    }
+
+    public static function getPrices()
+    {
+        $today = CarbonFa::now();
+
+        if(!$today->isThursday() && !$today->isFriday() &&
+            $today->getHour() > 8 && $today->getHour() < 13)
+        {
+            return TehranStockExchange::getSymbolsPrices();
+        }
+
+        if($prices = self::cacheExists()) return $prices;
+
+        return self::cachePrices();
+    }
+
+    public static function cachePrices()
+    {
+        $folder = Str::snake(class_basename(TehranStockExchange::class));
+        $filename = CarbonFa::now()->format("Y_m_d");
+
+        if(Storage::exists($path = "$folder/cache/"))
+        {
+            Storage::deleteDirectory($path);
+        }
+
+        $result = Storage::makeDirectory($path, 0755, true);
+
+        Storage::put($filePath = "$path/$filename",$prices = TehranStockExchange::getSymbolsPrices()->toJson());
+
+        return $result;
+    }
+
+    /**
+     * @return false|array
+     */
+    public function cacheExists()
+    {
+        $folder = Str::snake(class_basename(TehranStockExchange::class));
+        $filename = CarbonFa::now()->format("Y_m_d");
+
+        if(!Storage::exists($path = "$folder/cache/$filename")) return false;
+
+        return json_decode(Storage::get($path), true);
     }
 }
