@@ -19,5 +19,5 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 
 Broadcast::channel('alerts.{id}', function ($user, $id) {
     /** @var \App\Models\User $user */
-    return $user->alerts()->where('id','=',$id)->exists();
+    return (int) $user->id === (int) $id;
 });
