@@ -4,9 +4,10 @@
 namespace App\Acme\Exchange;
 
 
+use App\Events\AlertActivated;
 use App\Models\Alert;
 use App\Models\User;
-use App\Notifications\AlertActivated;
+use App\Notifications\AlertActivatedNotification;
 use Illuminate\Database\Eloquent\Builder;
 
 class SendAlertNotification
@@ -84,7 +85,8 @@ class SendAlertNotification
         {
             /** @var User $user */
             $user = $alert->user;
-            $user->notify(new AlertActivated($alert));
+            $user->notify(new AlertActivatedNotification($alert));
+            AlertActivated::dispatch($alert);
         }
     }
 

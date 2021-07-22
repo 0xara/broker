@@ -17,7 +17,7 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
 
-Broadcast::channel('tehran_stock_exchange_symbols_prices.{id}', function ($user, $id) {
-    return true;
-    //return (int) $user->id === (int) $id;
+Broadcast::channel('alerts.{id}', function ($user, $id) {
+    /** @var \App\Models\User $user */
+    return $user->alerts()->where('id','=',$id)->exists();
 });

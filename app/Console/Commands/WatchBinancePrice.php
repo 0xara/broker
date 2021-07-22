@@ -6,7 +6,6 @@ use App\Acme\Exchange\Binance;
 use App\Acme\Exchange\SendAlertNotification;
 use App\Models\Alert;
 use App\Models\User;
-use App\Notifications\AlertActivated;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Database\Eloquent\Builder;

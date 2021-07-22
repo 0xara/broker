@@ -11,7 +11,7 @@ use Illuminate\Notifications\Notification;
 use NotificationChannels\Telegram\TelegramChannel;
 use NotificationChannels\Telegram\TelegramMessage;
 
-class AlertActivated extends Notification
+class AlertActivatedNotification extends Notification
 {
     use Queueable;
 

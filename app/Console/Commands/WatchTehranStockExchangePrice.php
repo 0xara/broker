@@ -8,7 +8,6 @@ use App\Acme\Exchange\TehranStockExchange;
 use App\Events\TehranStockExchangeSymbolsPricesUpdated;
 use App\Models\Alert;
 use App\Models\User;
-use App\Notifications\AlertActivated;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Database\Eloquent\Builder;
@@ -63,15 +62,14 @@ class WatchTehranStockExchangePrice extends Command
 
         TehranStockExchangeSymbolsPricesUpdated::dispatch($prices);
 
-        SendAlertNotification::handle($prices);
+        if(self::marketIsOpen()) {
+            SendAlertNotification::handle($prices);
+        }
     }
 
     public static function getPrices()
     {
-        $today = CarbonFa::now();
-
-        if(!$today->isThursday() && !$today->isFriday() &&
-            $today->getHour() > 8 && $today->getHour() < 13)
+        if(self::marketIsOpen())
         {
             return TehranStockExchange::getSymbolsPrices();
         }
@@ -109,5 +107,13 @@ class WatchTehranStockExchangePrice extends Command
         if(!Storage::exists($path = "$folder/cache/$filename")) return false;
 
         return json_decode(Storage::get($path), true);
+    }
+
+    public static function marketIsOpen()
+    {
+        $today = CarbonFa::now();
+
+        return !$today->isThursday() && !$today->isFriday() &&
+            $today->getHour() > 8 && $today->getHour() < 13;
     }
 }
