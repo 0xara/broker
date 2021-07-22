@@ -81,12 +81,27 @@ class SendAlertNotification
             );
         }
 
+        $events = [];
+
         foreach ($alerts as $alert)
         {
             /** @var User $user */
             $user = $alert->user;
             $user->notify(new AlertActivatedNotification($alert));
-            AlertActivated::dispatch($alert);
+            if(!$events[$alert->user_id] ?? '') $events[$alert->user_id] = [];
+            $events[$alert->user_id][] = [
+                'id' => $alert->id,
+                'symbol' => $alert->symbol,
+                'operator' => $alert->operator,
+                'price' => $alert->price,
+                'message' => with($alert, function ($alert) {
+                    return $alert->symbol.AlertActivatedNotification::OPERATORS[$alert->operator].((float) $alert->price);
+                })
+            ];
+        }
+
+        foreach ($events as $user_id => $event) {
+            AlertActivated::dispatch($user_id,$alerts);
         }
     }
 

@@ -17,28 +17,20 @@ class AlertActivated implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    private $alert;
+    private $alerts;
 
-    public $id;
-
-    public $symbol;
-
-    public $operator;
-
-    public $price;
+    private $user_id;
 
     /**
      * Create a new event instance.
      *
-     * @param Alert $alert
+     * @param $user_id
+     * @param $alerts
      */
-    public function __construct($alert)
+    public function __construct($user_id, $alerts)
     {
-        $this->alert = $alert;
-        $this->id = $alert->id;
-        $this->symbol = $alert->symbol;
-        $this->operator = $alert->operator;
-        $this->price = $alert->price;
+        $this->alerts = $alerts;
+        $this->user_id = $user_id;
     }
 
     /**
@@ -48,7 +40,7 @@ class AlertActivated implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('alerts.'.$this->alert->user_id);
+        return new PrivateChannel('alerts.'.$this->user_id);
     }
 
     /**
