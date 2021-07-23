@@ -13,7 +13,7 @@ class WatchTehranStockExchangeShareDataList extends Command
      *
      * @var string
      */
-    protected $signature = 'exchange:watch-tehran-exchange-stock-datalist';
+    protected $signature = 'exchange:watch-tehran-stock-exchange-datalist';
 
     /**
      * The console command description.

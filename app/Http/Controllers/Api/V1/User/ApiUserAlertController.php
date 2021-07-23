@@ -275,6 +275,10 @@ class ApiUserAlertController extends Controller
      */
     public function prepareSymbols($symbols)
     {
+        if(!$symbols['quoteAsset'] ?? '') {
+            return $symbols;
+        }
+
         $result = [];
 
         foreach ($symbols as $symbol) {

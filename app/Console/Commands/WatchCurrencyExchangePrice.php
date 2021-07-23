@@ -5,25 +5,25 @@ namespace App\Console\Commands;
 use App\Acme\CarbonFa\CarbonFa;
 use App\Acme\Exchange\CachedSymbols;
 use App\Acme\Exchange\SendAlertNotification;
-use App\Acme\Exchange\TehranStockExchange;
-use App\Events\TehranStockExchangeSymbolsPricesUpdated;
+use App\Acme\Exchange\CurrencyExchange;
+use App\Events\CurrencyExchangeSymbolsPricesUpdated;
 use Illuminate\Console\Command;
 
-class WatchTehranStockExchangePrice extends Command
+class WatchCurrencyExchangePrice extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'exchange:watch-tehran-stock-exchange-price';
+    protected $signature = 'exchange:watch-currency-exchange-price';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'watch Tehran Exchange price changes';
+    protected $description = 'watch Currency Exchange price changes';
 
     /**
      * Create a new command instance.
@@ -44,13 +44,7 @@ class WatchTehranStockExchangePrice extends Command
     {
         $prices = collect(self::getPrices());
 
-        if($prices->has('index')) {
-            $indexData = $prices->get('index');
-            $indexData['price'] =  $indexData['value'];
-            $prices->put('index',$indexData);
-        }
-
-        TehranStockExchangeSymbolsPricesUpdated::dispatch($prices);
+        CurrencyExchangeSymbolsPricesUpdated::dispatch($prices);
 
         if(self::marketIsOpen()) {
             SendAlertNotification::handle($prices);
@@ -61,11 +55,11 @@ class WatchTehranStockExchangePrice extends Command
     {
         if(self::marketIsOpen())
         {
-            return TehranStockExchange::getSymbolsPrices();
+            return CurrencyExchange::getSymbolsPrices();
         }
 
-        return CachedSymbols::of(TehranStockExchange::class)->remember(function (){
-            return TehranStockExchange::getSymbolsPrices();
+        return CachedSymbols::of(CurrencyExchange::class)->remember(function (){
+            return CurrencyExchange::getSymbolsPrices();
         });
     }
 
@@ -73,7 +67,6 @@ class WatchTehranStockExchangePrice extends Command
     {
         $today = CarbonFa::now();
 
-        return !$today->isThursday() && !$today->isFriday() &&
-            $today->getHour() > 8 && $today->getHour() < 13;
+        return !$today->isFriday();
     }
 }
