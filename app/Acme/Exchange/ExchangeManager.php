@@ -12,6 +12,7 @@ class ExchangeManager
     public static $drivers = [
         'Binance' => Binance::class,
         'TehranStockExchange' => TehranStockExchange::class,
+        'CurrencyExchange' => CurrencyExchange::class,
     ];
 
 
