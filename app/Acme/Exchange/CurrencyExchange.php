@@ -25,9 +25,9 @@ class CurrencyExchange implements Exchangable
         $currencies = [];
 
         foreach ($result[2] as $key => $symbol) {
-            $currencies[trim($symbol,'"')] = [
+            $currencies[fix_persian_word(trim($symbol,'"'))] = [
                 'symbol_code' => trim($result[1][$key],'"'),
-                'symbol' => trim($symbol,'"'),
+                'symbol' => fix_persian_word(trim($symbol,'"')),
                 'english_title' => trim($result[3][$key],'"'),
                 'price' => $result[4][$key],
             ];
