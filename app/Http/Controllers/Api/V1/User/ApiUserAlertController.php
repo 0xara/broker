@@ -276,7 +276,13 @@ class ApiUserAlertController extends Controller
     public function prepareSymbols($symbols)
     {
         if(!($symbols['quoteAsset'] ?? '')) {
-            return $symbols;
+            return fractal()->collection($symbols)->transformWith(function ($symbol) {
+                return [
+                    'symbol' => $symbol['symbol']
+                ];
+            })
+                ->serializeWith(ArraySerializer::class)
+                ->toArray();
         }
 
         $result = [];
