@@ -88,7 +88,7 @@ class SendAlertNotification
             /** @var User $user */
             $user = $alert->user;
             $user->notify(new AlertActivatedNotification($alert));
-            if(!$events[$alert->user_id] ?? '') $events[$alert->user_id] = [];
+            if(!($events[$alert->user_id] ?? '')) $events[$alert->user_id] = [];
             $events[$alert->user_id][] = [
                 'id' => $alert->id,
                 'symbol' => $alert->symbol,

@@ -275,7 +275,7 @@ class ApiUserAlertController extends Controller
      */
     public function prepareSymbols($symbols)
     {
-        if(!$symbols['quoteAsset'] ?? '') {
+        if(!($symbols['quoteAsset'] ?? '')) {
             return $symbols;
         }
 
