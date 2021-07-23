@@ -4,6 +4,7 @@
 namespace App\Acme\Exchange;
 
 
+use App\Acme\CurrencyFa\CurrencyFa;
 use App\Events\AlertActivated;
 use App\Models\Alert;
 use App\Models\User;
@@ -93,9 +94,9 @@ class SendAlertNotification
                 'id' => $alert->id,
                 'symbol' => $alert->symbol,
                 'operator' => $alert->operator,
-                'price' => $alert->price,
-                'message' => with($alert, function ($alert) {
-                    return $alert->symbol.AlertActivatedNotification::OPERATORS[$alert->operator].((float) $alert->price);
+                'price' => $price = (string) CurrencyFa::of($alert->price)->toCurrency(),
+                'message' => with($alert, function ($alert) use($price) {
+                    return $alert->symbol.AlertActivatedNotification::OPERATORS[$alert->operator].($price);
                 })
             ];
         }

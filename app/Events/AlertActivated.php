@@ -17,7 +17,7 @@ class AlertActivated implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    private $alerts;
+    public $alerts;
 
     private $user_id;
 
