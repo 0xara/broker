@@ -102,7 +102,7 @@ class SendAlertNotification
         }
 
         foreach ($events as $user_id => $event) {
-            AlertActivated::dispatch($user_id,$alerts);
+            AlertActivated::dispatch($user_id,$event);
         }
     }
 
