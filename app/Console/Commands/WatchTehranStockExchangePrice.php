@@ -71,7 +71,7 @@ class WatchTehranStockExchangePrice extends Command
 
     public static function marketIsOpen()
     {
-        $today = CarbonFa::now();
+        $today = CarbonFa::now(new \DateTimeZone('Asia/Tehran'));
 
         return !$today->isThursday() && !$today->isFriday() &&
             $today->getHour() > 8 && $today->getHour() < 13;

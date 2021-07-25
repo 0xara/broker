@@ -65,8 +65,8 @@ class WatchCurrencyExchangePrice extends Command
 
     public static function marketIsOpen()
     {
-        $today = CarbonFa::now();
+        $today = CarbonFa::now(new \DateTimeZone('Asia/Tehran'));
 
-        return !$today->isFriday();
+        return !$today->isFriday() && $today->getHour() > 7 && $today->getHour() < 23;
     }
 }

@@ -92,7 +92,7 @@ class CachedSymbols
         if($this->gregorian)
             return Carbon::now()->format("Y_m_d");
 
-        return CarbonFa::now()->format("Y_m_d");
+        return CarbonFa::now(new \DateTimeZone('Asia/Tehran'))->format("Y_m_d");
     }
 
     public function setName($name)
