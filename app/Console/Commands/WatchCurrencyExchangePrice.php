@@ -55,7 +55,9 @@ class WatchCurrencyExchangePrice extends Command
     {
         if(self::marketIsOpen())
         {
-            return CurrencyExchange::getSymbolsPrices();
+            return CachedSymbols::of(CurrencyExchange::class)->save(function (){
+                return CurrencyExchange::getSymbolsPrices();
+            });
         }
 
         return CachedSymbols::of(CurrencyExchange::class)->remember(function (){

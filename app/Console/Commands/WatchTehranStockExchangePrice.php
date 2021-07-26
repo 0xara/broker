@@ -61,7 +61,9 @@ class WatchTehranStockExchangePrice extends Command
     {
         if(self::marketIsOpen())
         {
-            return TehranStockExchange::getSymbolsPrices();
+            return CachedSymbols::of(TehranStockExchange::class)->save(function (){
+                return TehranStockExchange::getSymbolsPrices();
+            });
         }
 
         return CachedSymbols::of(TehranStockExchange::class)->remember(function (){
