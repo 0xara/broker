@@ -42,7 +42,7 @@ class WatchTehranStockExchangePrice extends Command
      */
     public function handle()
     {
-        $prices = collect(self::getPrices());
+        if(!count($prices = collect(self::getPrices()))) return;
 
         if($prices->has('index')) {
             $indexData = $prices->get('index');
