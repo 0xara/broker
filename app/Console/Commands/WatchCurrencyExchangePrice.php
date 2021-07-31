@@ -42,7 +42,7 @@ class WatchCurrencyExchangePrice extends Command
      */
     public function handle()
     {
-        $prices = collect(self::getPrices());
+        if(!count($prices = collect(self::getPrices()))) return;
 
         CurrencyExchangeSymbolsPricesUpdated::dispatch($prices);
 
