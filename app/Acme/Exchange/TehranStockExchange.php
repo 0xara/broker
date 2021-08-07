@@ -282,7 +282,7 @@ class TehranStockExchange implements Exchangable
                 TehranStockExchangeShare::share_count => $data[21],
                 TehranStockExchangeShare::update_at => Carbon::now()->timestamp,
             ];
-        })->keyBy('stock_code')->prepend([
+        })->keyBy(TehranStockExchangeShare::stock_code)->prepend([
             TehranStockExchangeShare::symbol => 'شاخص کل',
             'value' => $indexData[2],
             TehranStockExchangeShare::change_from_yesterday => $indexResult[2] ?? '',
