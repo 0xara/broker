@@ -23,6 +23,8 @@ class TehranStockExchangeSymbolsPricesUpdated implements ShouldBroadcast
      */
     public $priceList;
 
+    public $groups = [];
+
     /**
      * Create a new event instance.
      *
@@ -31,6 +33,8 @@ class TehranStockExchangeSymbolsPricesUpdated implements ShouldBroadcast
     public function __construct($prices = [])
     {
         $prices = collect($prices->all())->forget('index');
+
+        $this->groups = TehranStockExchangeShare::groupBy('group_code','group_name')->pluck('group_name','group_code');
 
         $this->priceList = fractal()->collection($prices)->transformWith(function ($symbol) {
             return [
@@ -43,7 +47,6 @@ class TehranStockExchangeSymbolsPricesUpdated implements ShouldBroadcast
                 TehranStockExchangeShare::min_price => $symbol[TehranStockExchangeShare::min_price],
                 TehranStockExchangeShare::max_price => $symbol[TehranStockExchangeShare::max_price],
                 TehranStockExchangeShare::transactions_volume => $symbol[TehranStockExchangeShare::transactions_volume],
-                TehranStockExchangeShare::group_name => $symbol[TehranStockExchangeShare::group_name]
             ];
         })
         ->serializeWith(ArraySerializer::class)
