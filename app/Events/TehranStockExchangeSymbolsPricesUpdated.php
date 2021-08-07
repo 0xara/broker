@@ -47,6 +47,7 @@ class TehranStockExchangeSymbolsPricesUpdated implements ShouldBroadcast
                 TehranStockExchangeShare::min_price => $symbol[TehranStockExchangeShare::min_price],
                 TehranStockExchangeShare::max_price => $symbol[TehranStockExchangeShare::max_price],
                 TehranStockExchangeShare::transactions_volume => $symbol[TehranStockExchangeShare::transactions_volume],
+                TehranStockExchangeShare::group_code => $symbol[TehranStockExchangeShare::group_code],
             ];
         })
         ->serializeWith(ArraySerializer::class)
