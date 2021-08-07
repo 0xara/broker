@@ -256,7 +256,7 @@ class TehranStockExchange implements Exchangable
         preg_match("/<div class='(\w{2})'>[(]?([^)]+)[)]?<\/div>(.+)%/s",$indexData[3],$indexResult);
 
         /** @var Collection $groups */
-        $groups = TehranStockExchangeShare::groupBy('group_id')->pluck('group_name','group_code');
+        $groups = TehranStockExchangeShare::groupBy('group_code')->pluck('group_name','group_code');
 
         return collect(explode(';',$data[2]))->map(function ($item) use ($groups) {
             $data =  explode(',',$item);
