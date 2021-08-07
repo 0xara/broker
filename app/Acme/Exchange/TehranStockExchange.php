@@ -8,6 +8,7 @@ use App\Imports\TehranExchangeDailyCandlePriceImport;
 use App\Models\TehranStockExchangeShare;
 use Carbon\Carbon;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
@@ -66,6 +67,8 @@ class TehranStockExchange implements Exchangable
 
         if($name == "',DEven='',LSecVal='',CgrValCot='',Flow='',InstrumentID='")
             return false;
+
+        if(!$name) return false;
 
         return [
             "stock_code" => $stockCode,
@@ -252,36 +255,42 @@ class TehranStockExchange implements Exchangable
 
         preg_match("/<div class='(\w{2})'>[(]?([^)]+)[)]?<\/div>(.+)%/s",$indexData[3],$indexResult);
 
-        return collect(explode(';',$data[2]))->map(function ($item) {
+        /** @var Collection $groups */
+        $groups = TehranStockExchangeShare::groupBy('group_id')->pluck('group_name','group_code');
+
+        return collect(explode(';',$data[2]))->map(function ($item) use ($groups) {
             $data =  explode(',',$item);
             return [
-                'stock_code' => $data[0],
-                'instrument_id' => $data[1],
-                'symbol' => $data[2],
-                'symbol_name' => $data[3],
-                'first_price' => $data[5],
-                'end_price' => $data[6],
-                'price' => $data[7],
-                'transactions_count' => $data[8],
-                'transactions_volume' => $data[9],
-                'transactions_value' => $data[10],
-                'min_price' => $data[11],
-                'max_price' => $data[12],
-                'yesterday_price' => $data[13],
-                'estimated_eps' => $data[14],
-                'group_code' => $data[18],
-                'day_max_price' => $data[19],
-                'day_min_price' => $data[20],
-                'share_count' => $data[21],
+                TehranStockExchangeShare::stock_code => $data[0],
+                TehranStockExchangeShare::instrument_id => $data[1],
+                TehranStockExchangeShare::symbol => $data[2],
+                TehranStockExchangeShare::symbol_name => $data[3],
+                TehranStockExchangeShare::first_price => $data[5],
+                TehranStockExchangeShare::end_price => $data[6],
+                TehranStockExchangeShare::price => $data[7],
+                TehranStockExchangeShare::transactions_count => $data[8],
+                TehranStockExchangeShare::transactions_volume => $data[9],
+                TehranStockExchangeShare::transactions_value => $data[10],
+                TehranStockExchangeShare::min_price => $data[11],
+                TehranStockExchangeShare::max_price => $data[12],
+                TehranStockExchangeShare::yesterday_end_price => $data[13],
+                TehranStockExchangeShare::estimated_eps => $data[14],
+                TehranStockExchangeShare::group_code => $data[18],
+                TehranStockExchangeShare::group_name => $groups->get($data[18]),
+                TehranStockExchangeShare::day_max_price => $data[19],
+                TehranStockExchangeShare::day_min_price => $data[20],
+                TehranStockExchangeShare::share_count => $data[21],
+                TehranStockExchangeShare::update_at => Carbon::now()->timestamp,
             ];
         })->keyBy('stock_code')->prepend([
-            'symbol' => 'شاخص کل',
+            TehranStockExchangeShare::symbol => 'شاخص کل',
             'value' => $indexData[2],
-            'change_from_yesterday' => $indexResult[2] ?? '',
-            'change_percentage' => $indexResult[3] ?? '',
-            'change_state_from_yesterday' => with(count($indexResult) > 0 ? $indexResult : null, function ($indexResult) {
+            TehranStockExchangeShare::change_from_yesterday => $indexResult[2] ?? '',
+            TehranStockExchangeShare::change_percentage => $indexResult[3] ?? '',
+            TehranStockExchangeShare::change_state_from_yesterday => with(count($indexResult) > 0 ? $indexResult : null, function ($indexResult) {
                 return in_array($indexResult[1],['pn','mn']) ? ($indexResult[1] == "pn" ? 'UP' : 'DOWN') : '';
             }),
+            TehranStockExchangeShare::update_at => Carbon::now()->timestamp,
         ],'index');
     }
 }
