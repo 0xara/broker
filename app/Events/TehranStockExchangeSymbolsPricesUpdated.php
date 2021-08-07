@@ -39,7 +39,7 @@ class TehranStockExchangeSymbolsPricesUpdated implements ShouldBroadcast
         $this->priceList = fractal()->collection($prices)->transformWith(function ($symbol) {
             return [
                 TehranStockExchangeShare::stock_code => $symbol[TehranStockExchangeShare::stock_code],
-                TehranStockExchangeShare::instrument_id => $symbol[TehranStockExchangeShare::instrument_id],
+                // TehranStockExchangeShare::instrument_id => $symbol[TehranStockExchangeShare::instrument_id],
                 TehranStockExchangeShare::update_at=> $symbol[TehranStockExchangeShare::update_at] * 1000,
                 TehranStockExchangeShare::symbol => $symbol[TehranStockExchangeShare::symbol],
                 TehranStockExchangeShare::price => $symbol[TehranStockExchangeShare::price],
