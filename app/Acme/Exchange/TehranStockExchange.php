@@ -284,7 +284,7 @@ class TehranStockExchange implements Exchangable
             ];
         })->keyBy(TehranStockExchangeShare::stock_code)->prepend([
             TehranStockExchangeShare::symbol => 'شاخص کل',
-            'value' => $indexData[2],
+            TehranStockExchangeShare::value => $indexData[2],
             TehranStockExchangeShare::change_from_yesterday => $indexResult[2] ?? '',
             TehranStockExchangeShare::change_percentage => $indexResult[3] ?? '',
             TehranStockExchangeShare::change_state_from_yesterday => with(count($indexResult) > 0 ? $indexResult : null, function ($indexResult) {

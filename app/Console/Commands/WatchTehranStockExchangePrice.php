@@ -7,6 +7,7 @@ use App\Acme\Exchange\CachedSymbols;
 use App\Acme\Exchange\SendAlertNotification;
 use App\Acme\Exchange\TehranStockExchange;
 use App\Events\TehranStockExchangeSymbolsPricesUpdated;
+use App\Models\TehranStockExchangeShare;
 use Illuminate\Console\Command;
 
 class WatchTehranStockExchangePrice extends Command
@@ -46,14 +47,14 @@ class WatchTehranStockExchangePrice extends Command
 
         if($prices->has('index')) {
             $indexData = $prices->get('index');
-            $indexData['price'] =  $indexData['value'];
+            $indexData[TehranStockExchangeShare::price] =  $indexData[TehranStockExchangeShare::value];
             $prices->put('index',$indexData);
         }
 
         TehranStockExchangeSymbolsPricesUpdated::dispatch($prices);
 
         if(self::marketIsOpen()) {
-            SendAlertNotification::handle($prices);
+            SendAlertNotification::handle($prices, TehranStockExchangeShare::symbol,TehranStockExchangeShare::price);
         }
     }
 

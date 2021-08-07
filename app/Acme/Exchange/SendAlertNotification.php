@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Builder;
 class SendAlertNotification
 {
 
-    public static function handle($symbolObjects)
+    public static function handle($symbolObjects, $symbolKey = 'symbol', $priceKey = 'price')
     {
         \Log::info('schedule ping');
 
@@ -34,18 +34,18 @@ class SendAlertNotification
 
         foreach ($symbolObjects as $KEY => $symbolObj)
         {
-            if(! $existSymbolsInDB->contains($symbolObj['symbol'])) continue;
+            if(! $existSymbolsInDB->contains($symbolObj[$symbolKey])) continue;
 
-            $alerts->orWhere(function ($q) use ($KEY, $symbolObj) {
+            $alerts->orWhere(function ($q) use ($KEY, $symbolObj,$symbolKey,$priceKey) {
                 /** @var Builder $q */
-                $q->where('symbol','=',$symbolObj['symbol']);
+                $q->where('symbol','=',$symbolObj[$symbolKey]);
                 $q->where('active','=',1);
                 $q->whereRaw(
                     "CASE " .
-                    " WHEN Operator='".Alert::GTE."' AND current_position='".Alert::DOWN_POSITION."' THEN price"." <= ".$symbolObj['price'].
-                    " WHEN Operator='".Alert::LTE."' AND current_position='".Alert::UP_POSITION."' THEN price"." >= ".$symbolObj['price'].
-                    //" WHEN Operator='".Alert::CROSS."' AND current_position='".Alert::UP_POSITION."' THEN price"." < ".$symbolObj['price'].
-                    //" WHEN Operator='".Alert::CROSS."' AND current_position='".Alert::DOWN_POSITION."' THEN price"." > ".$symbolObj['price'].
+                    " WHEN Operator='".Alert::GTE."' AND current_position='".Alert::DOWN_POSITION."' THEN price"." <= ".$symbolObj[$priceKey].
+                    " WHEN Operator='".Alert::LTE."' AND current_position='".Alert::UP_POSITION."' THEN price"." >= ".$symbolObj[$priceKey].
+                    //" WHEN Operator='".Alert::CROSS."' AND current_position='".Alert::UP_POSITION."' THEN price"." < ".$symbolObj[$priceKey].
+                    //" WHEN Operator='".Alert::CROSS."' AND current_position='".Alert::DOWN_POSITION."' THEN price"." > ".$symbolObj[$priceKey].
                     " ELSE 0 END"
                 );
             });
@@ -54,12 +54,12 @@ class SendAlertNotification
             $is_first = false;
 
             $updateQuery .= "(" .
-                "symbol='{$symbolObj['symbol']}' AND ".
+                "symbol='{$symbolObj[$symbolKey]}' AND ".
                 "( CASE " .
-                " WHEN Operator='".Alert::GTE."' AND current_position='".Alert::UP_POSITION."' THEN price"." > ".$symbolObj['price'].
-                " WHEN Operator='".Alert::LTE."' AND current_position='".Alert::DOWN_POSITION."' THEN price"." < ".$symbolObj['price'].
-                // " WHEN Operator='".Alert::CROSS."' AND current_position='".Alert::DOWN_POSITION."' THEN price"." > ".$symbolObj['price'].
-                //" WHEN Operator='".Alert::CROSS."' AND current_position='".Alert::UP_POSITION."' THEN price"." < ".$symbolObj['price'].
+                " WHEN Operator='".Alert::GTE."' AND current_position='".Alert::UP_POSITION."' THEN price"." > ".$symbolObj[$priceKey].
+                " WHEN Operator='".Alert::LTE."' AND current_position='".Alert::DOWN_POSITION."' THEN price"." < ".$symbolObj[$priceKey].
+                // " WHEN Operator='".Alert::CROSS."' AND current_position='".Alert::DOWN_POSITION."' THEN price"." > ".$symbolObj[$priceKey].
+                //" WHEN Operator='".Alert::CROSS."' AND current_position='".Alert::UP_POSITION."' THEN price"." < ".$symbolObj[$priceKey].
                 " ELSE 0 END )" .
                 ")";
         }

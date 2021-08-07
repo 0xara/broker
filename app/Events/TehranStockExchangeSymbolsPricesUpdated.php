@@ -37,7 +37,7 @@ class TehranStockExchangeSymbolsPricesUpdated implements ShouldBroadcast
                 TehranStockExchangeShare::stock_code => $symbol[TehranStockExchangeShare::stock_code],
                 TehranStockExchangeShare::instrument_id => $symbol[TehranStockExchangeShare::instrument_id],
                 TehranStockExchangeShare::update_at=> $symbol[TehranStockExchangeShare::update_at] * 1000,
-                TehranStockExchangeShare::symbol_name => $symbol[TehranStockExchangeShare::symbol_name],
+                TehranStockExchangeShare::symbol => $symbol[TehranStockExchangeShare::symbol],
                 TehranStockExchangeShare::price => $symbol[TehranStockExchangeShare::price],
                 TehranStockExchangeShare::first_price => $symbol[TehranStockExchangeShare::first_price],
                 TehranStockExchangeShare::min_price => $symbol[TehranStockExchangeShare::min_price],
