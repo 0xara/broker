@@ -21,3 +21,13 @@ Broadcast::channel('alerts.{id}', function ($user, $id) {
     /** @var \App\Models\User $user */
     return (int) $user->id === (int) $id;
 });
+
+Broadcast::channel('tehran_stock_exchange', function ($user) {
+    /** @var \App\Models\User $user */
+    return !!$user;
+});
+
+Broadcast::channel('currency_exchange', function ($user) {
+    /** @var \App\Models\User $user */
+    return !!$user;
+});

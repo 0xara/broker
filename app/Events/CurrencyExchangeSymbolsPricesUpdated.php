@@ -45,7 +45,7 @@ class CurrencyExchangeSymbolsPricesUpdated implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('currency_exchange');
+        return new PrivateChannel('currency_exchange');
     }
 
     /**

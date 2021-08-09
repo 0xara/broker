@@ -61,7 +61,7 @@ class TehranStockExchangeSymbolsPricesUpdated implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('tehran_stock_exchange');
+        return new PrivateChannel('tehran_stock_exchange');
     }
 
     /**

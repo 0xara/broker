@@ -17,7 +17,7 @@ class WatchTehranStockExchangePrice extends Command
      *
      * @var string
      */
-    protected $signature = 'exchange:watch-tehran-stock-exchange-price';
+    protected $signature = 'exchange:watch-tehran-stock-exchange-price {--no-alert} {--cached}';
 
     /**
      * The console command description.
@@ -43,7 +43,7 @@ class WatchTehranStockExchangePrice extends Command
      */
     public function handle()
     {
-        if(!count($prices = collect(self::getPrices()))) return;
+        if(!count($prices = collect(self::getPrices($this->option('cached'))))) return;
 
         if($prices->has('index')) {
             $indexData = $prices->get('index');
@@ -53,14 +53,14 @@ class WatchTehranStockExchangePrice extends Command
 
         TehranStockExchangeSymbolsPricesUpdated::dispatch($prices);
 
-        if(self::marketIsOpen()) {
+        if(self::marketIsOpen() && !$this->option('no-alert')) {
             SendAlertNotification::handle($prices, TehranStockExchangeShare::symbol,TehranStockExchangeShare::price);
         }
     }
 
-    public static function getPrices()
+    public static function getPrices($justCached = false)
     {
-        if(self::marketIsOpen())
+        if(self::marketIsOpen() && !$justCached)
         {
             return CachedSymbols::of(TehranStockExchange::class)->save(function (){
                 return TehranStockExchange::getSymbolsPrices();
