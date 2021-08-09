@@ -16,6 +16,9 @@ class CurrencyExchangeSymbolsPricesUpdated implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    public static $CHANNEL = "currency_exchange";
+    public static $as = "symbols_prices_updated";
+
     /**
      * @var array
      */
@@ -45,7 +48,7 @@ class CurrencyExchangeSymbolsPricesUpdated implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('currency_exchange');
+        return new PrivateChannel(self::$CHANNEL);
     }
 
     /**
@@ -55,6 +58,6 @@ class CurrencyExchangeSymbolsPricesUpdated implements ShouldBroadcast
      */
     public function broadcastAs()
     {
-        return 'symbols_prices_updated';
+        return self::$as;
     }
 }
