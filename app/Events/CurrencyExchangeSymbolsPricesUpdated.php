@@ -16,8 +16,8 @@ class CurrencyExchangeSymbolsPricesUpdated implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public static $CHANNEL = "currency_exchange";
-    public static $as = "symbols_prices_updated";
+    private static $CHANNEL = "currency_exchange";
+    private static $as = "symbols_prices_updated";
 
     /**
      * @var array

@@ -18,8 +18,8 @@ class TehranStockExchangeSymbolsPricesUpdated implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public static $CHANNEL = "tehran_stock_exchange";
-    public static $as = "symbols_prices_updated";
+    private static $CHANNEL = "tehran_stock_exchange";
+    private static $as = "symbols_prices_updated";
 
     /**
      * @var array
