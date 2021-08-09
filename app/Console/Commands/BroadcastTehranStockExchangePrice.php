@@ -18,7 +18,7 @@ class BroadcastTehranStockExchangePrice extends Command
      *
      * @var string
      */
-    protected $signature = 'exchange:broadcast-tehran-stock-exchange-price';
+    protected $signature = 'exchange:broadcast-tehran-stock-exchange-price {seconds=5}';
 
     /**
      * The console command description.
