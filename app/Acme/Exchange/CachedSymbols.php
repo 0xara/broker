@@ -61,6 +61,14 @@ class CachedSymbols
     }
 
     /**
+     * @return null
+     */
+    public function get()
+    {
+        return $this->exists() ?: null;
+    }
+
+    /**
      * @param $name
      * @return bool|mixed
      */

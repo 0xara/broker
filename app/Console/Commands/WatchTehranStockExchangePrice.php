@@ -51,8 +51,6 @@ class WatchTehranStockExchangePrice extends Command
             $prices->put('index',$indexData);
         }
 
-        TehranStockExchangeSymbolsPricesUpdated::dispatch($prices);
-
         if(self::marketIsOpen() && !$this->option('no-alert')) {
             SendAlertNotification::handle($prices, TehranStockExchangeShare::symbol,TehranStockExchangeShare::price);
         }

@@ -30,9 +30,13 @@ class Kernel extends ConsoleKernel
 
         $schedule->command('exchange:watch-tehran-stock-exchange-price')->everyTwoMinutes();
 
+        $schedule->command('exchange:broadcast-tehran-stock-exchange-price')->everyMinute();
+
         $schedule->command('exchange:watch-tehran-stock-exchange-datalist')->daily();
 
         $schedule->command('exchange:watch-currency-exchange-price')->everyTenMinutes();
+
+        $schedule->command('exchange:broadcast-currency-exchange-price')->everyMinute();
     }
 
     /**

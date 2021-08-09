@@ -44,8 +44,6 @@ class WatchCurrencyExchangePrice extends Command
     {
         if(!count($prices = collect(self::getPrices($this->option('cached'))))) return;
 
-        CurrencyExchangeSymbolsPricesUpdated::dispatch($prices);
-
         if(self::marketIsOpen() && !$this->option('no-alert')) {
             SendAlertNotification::handle($prices);
         }
