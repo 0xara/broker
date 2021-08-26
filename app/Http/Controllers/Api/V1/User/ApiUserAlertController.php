@@ -46,6 +46,7 @@ class ApiUserAlertController extends Controller
                         'active' => $alert->active,
                         'repeat' => $alert->repeat,
                         'details' => $alert->details,
+                        'charts' => $alert->charts,
                         'created_at' => CarbonFa::setCarbon($alert->created_at)->toJalali(true,'Y/m/d H:i'),
                         'updated_at' => CarbonFa::setCarbon($alert->updated_at)->toJalali(true,'Y/m/d H:i'),
                     ];
