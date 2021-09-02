@@ -19,7 +19,7 @@ class CreateWatchlistItemsTable extends Migration
             $table->unsignedBigInteger('exchange_id');
             $table->unsignedBigInteger('category_id');
             $table->string('symbol')->index();
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }

@@ -16,4 +16,12 @@ class WatchlistItem extends \Eloquent
     {
         return $this->belongsTo(Watchlist::class,'watchlist_id');
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function exchange()
+    {
+        return $this->belongsTo(Exchange::class,'exchange_id');
+    }
 }
