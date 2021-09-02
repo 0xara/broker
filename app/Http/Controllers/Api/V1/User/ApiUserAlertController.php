@@ -61,26 +61,9 @@ class ApiUserAlertController extends Controller
      */
     public function create(Request $request)
     {
-        $exchange_id = $request->input('exchange');
-
-        $exchange = Exchange::where('id','=',$exchange_id)->first();
-
-        $symbols = $exchange ? ExchangeManager::getExchange($exchange->name)->getSymbols() : [];
-
-/*        if(!$symbols->contains($request->old('symbol'))) {
-            $request->flashOnly('symbol');
-        }*/
-
-        if($request->wantsJson()) {
-            return [
-                'symbols' => $this->prepareSymbols($symbols),
-                'operator_titles' => Alert::OPERATOR_TITLES,
-            ];
-        }
-
-        return view('user.pages.alert.create')->with([
-            'symbols' => $this->prepareSymbols($symbols)
-        ]);
+        return [
+            'operator_titles' => Alert::OPERATOR_TITLES,
+        ];
     }
 
     /**
@@ -159,28 +142,14 @@ class ApiUserAlertController extends Controller
         /** @var Alert $alert */
         $alert = $user->alerts()->findOrFail($id);
 
-        $symbols = ExchangeManager::getExchange($alert->exchange->name)->getSymbols();
-
-        if($request->wantsJson()) {
-            return [
-                'alert' => fractal()->item($alert)->transformWith(function ($alert) {
-                    /** @var Alert $alert */
-                    return array_merge($alert->toArray(), ['price' => (float) $alert->price]);
-                })->serializeWith(ArraySerializer::class)
-                    ->toArray(),
-                'symbols' => $this->prepareSymbols($symbols),
-                'operator_titles' => Alert::OPERATOR_TITLES,
-            ];
-        }
-
-/*        if(!$symbols->contains($request->old('symbol'))) {
-            $request->flashOnly('symbol');
-        }*/
-
-        return view('user.pages.alert.edit')->with([
-            'alert' => $alert,
-            'symbols' => $this->prepareSymbols($symbols),
-        ]);
+        return [
+            'alert' => fractal()->item($alert)->transformWith(function ($alert) {
+                /** @var Alert $alert */
+                return array_merge($alert->toArray(), ['price' => (float) $alert->price]);
+            })->serializeWith(ArraySerializer::class)
+                ->toArray(),
+            'operator_titles' => Alert::OPERATOR_TITLES,
+        ];
     }
 
     /**
