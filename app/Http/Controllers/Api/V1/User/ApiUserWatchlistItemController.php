@@ -71,11 +71,14 @@ class ApiUserWatchlistItemController extends Controller
      */
     public function store(UserWatchlistItemRequest $request)
     {
-        WatchlistItem::create(
+        $watchlist = WatchlistItem::create(
             $request->validated()
         );
 
-        return [];
+        return [
+            'id' => $watchlist->id,
+            'symbol' => $watchlist->symbol
+        ];
     }
 
     /**
@@ -115,7 +118,10 @@ class ApiUserWatchlistItemController extends Controller
             $request->validated()
         );
 
-        return [];
+        return [
+            'id' => $watchlist->id,
+            'symbol' => $watchlist->symbol
+        ];
     }
 
     /**
