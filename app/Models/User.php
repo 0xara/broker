@@ -49,4 +49,20 @@ class User extends Authenticatable
     {
         return $this->hasMany(Alert::class,'user_id');
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function watchlists()
+    {
+        return $this->hasMany(Watchlist::class,'user_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function watchlistItems()
+    {
+        return $this->hasMany(WatchlistItem::class,'user_id');
+    }
 }
