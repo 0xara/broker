@@ -27,6 +27,7 @@ class UserWatchlistItemRequest extends FormRequest
     {
         return [
             'watchlist_id' => [
+                'required',
                 Rule::exists('watchlists','id')->where('user_id',auth()->id())
             ],
             'exchange_id' => [

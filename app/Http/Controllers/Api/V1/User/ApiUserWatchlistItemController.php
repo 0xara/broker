@@ -82,7 +82,11 @@ class ApiUserWatchlistItemController extends Controller
 
         return [
             'id' => $watchlist->id,
-            'symbol' => $watchlist->symbol
+            'symbol' => $watchlist->symbol,
+            'exchange' => [
+                'id' => $watchlist->exchange->id,
+                'name' => $watchlist->exchange->name,
+            ]
         ];
     }
 
@@ -125,7 +129,11 @@ class ApiUserWatchlistItemController extends Controller
 
         return [
             'id' => $watchlist->id,
-            'symbol' => $watchlist->symbol
+            'symbol' => $watchlist->symbol,
+            'exchange' => [
+                'id' => $watchlist->exchange->id,
+                'name' => $watchlist->exchange->name,
+            ]
         ];
     }
 
