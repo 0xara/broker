@@ -24,7 +24,7 @@ class ApiUserWatchlistController extends Controller
                     'name' => $watchlist->name,
                 ];
             })
-                ->transformWith(ArraySerializer::class)
+                ->serializeWith(ArraySerializer::class)
                 ->toArray()
         ];
     }
