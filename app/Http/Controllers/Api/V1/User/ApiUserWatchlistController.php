@@ -8,7 +8,7 @@ use App\Models\Watchlist;
 use Illuminate\Http\Request;
 use Spatie\Fractalistic\ArraySerializer;
 
-class ApiUserWatchListController extends Controller
+class ApiUserWatchlistController extends Controller
 {
     /**
      * Display a listing of the resource.
