@@ -71,9 +71,14 @@ class ApiUserWatchlistItemController extends Controller
      */
     public function store(UserWatchlistItemRequest $request)
     {
-        $watchlist = WatchlistItem::create(
+        $watchlist = WatchlistItem::make(
             $request->validated()
         );
+
+        /** @var User $user */
+        $user = auth()->user();
+
+        $user->watchlistItems()->save($watchlist);
 
         return [
             'id' => $watchlist->id,
@@ -112,7 +117,7 @@ class ApiUserWatchlistItemController extends Controller
      */
     public function update(UserWatchlistItemRequest $request, $id)
     {
-        $watchlist = WatchlistItem::findOrFail($id);
+        $watchlist = WatchlistItem::where('user_id','=',auth()->user()->id)->findOrFail($id);
 
         $watchlist->update(
             $request->validated()
