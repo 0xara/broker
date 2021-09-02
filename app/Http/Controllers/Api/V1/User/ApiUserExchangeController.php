@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1\User;
 use App\Http\Controllers\Controller;
 use App\Models\Exchange;
 use Illuminate\Http\Request;
+use Spatie\Fractalistic\ArraySerializer;
 
 class ApiUserExchangeController extends Controller
 {
@@ -17,6 +18,8 @@ class ApiUserExchangeController extends Controller
                 'exchange_id' => $exchange->id,
                 'name' => $exchange->name,
             ];
-        });
+        })
+            ->serializeWith(ArraySerializer::class)
+            ->toArray();
     }
 }
