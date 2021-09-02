@@ -39,7 +39,7 @@ class ApiUserWatchlistItemController extends Controller
             ->paginate();
 
         return [
-            'items' => fractal()->collection($watchlistItems)->transformWith(function ($watchlist) {
+            'items' => fractal($watchlistItems)->transformWith(function ($watchlist) {
                 return [
                     'id' => $watchlist->id,
                     'symbol' => $watchlist->symbol,
