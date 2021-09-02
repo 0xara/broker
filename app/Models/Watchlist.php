@@ -9,6 +9,8 @@ class Watchlist extends \Eloquent
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
