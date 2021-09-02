@@ -63,9 +63,7 @@ class ApiUserAlertController extends Controller
     {
         $exchange_id = $request->input('exchange');
 
-        $exchanges = Exchange::select(['name','id'])->get();
-
-        $exchange = $exchanges->where('id','=',$exchange_id)->first();
+        $exchange = Exchange::where('id','=',$exchange_id)->first();
 
         $symbols = $exchange ? ExchangeManager::getExchange($exchange->name)->getSymbols() : [];
 
@@ -77,14 +75,6 @@ class ApiUserAlertController extends Controller
             return [
                 'symbols' => $this->prepareSymbols($symbols),
                 'operator_titles' => Alert::OPERATOR_TITLES,
-                'exchanges' => fractal()->collection($exchanges)->transformWith(function ($exchange) {
-                    return [
-                        'exchange_id' => $exchange->id,
-                        'name' => $exchange->name,
-                    ];
-                })
-                ->serializeWith(ArraySerializer::class)
-                ->toArray()
             ];
         }
 
@@ -169,8 +159,6 @@ class ApiUserAlertController extends Controller
         /** @var Alert $alert */
         $alert = $user->alerts()->findOrFail($id);
 
-        $exchanges = Exchange::select(['name','id'])->get();
-
         $symbols = ExchangeManager::getExchange($alert->exchange->name)->getSymbols();
 
         if($request->wantsJson()) {
@@ -182,14 +170,6 @@ class ApiUserAlertController extends Controller
                     ->toArray(),
                 'symbols' => $this->prepareSymbols($symbols),
                 'operator_titles' => Alert::OPERATOR_TITLES,
-                'exchanges' => fractal()->collection($exchanges)->transformWith(function ($exchange) {
-                    return [
-                        'exchange_id' => $exchange->id,
-                        'name' => $exchange->name,
-                    ];
-                })
-                ->serializeWith(ArraySerializer::class)
-                ->toArray()
             ];
         }
 
