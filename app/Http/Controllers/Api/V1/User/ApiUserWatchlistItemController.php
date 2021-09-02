@@ -121,7 +121,7 @@ class ApiUserWatchlistItemController extends Controller
      */
     public function update(UserWatchlistItemRequest $request, $id)
     {
-        $watchlist = WatchlistItem::where('user_id','=',auth()->user()->id)->findOrFail($id);
+        $watchlist = WatchlistItem::where('user_id','=',auth()->id())->findOrFail($id);
 
         $watchlist->update(
             $request->validated()

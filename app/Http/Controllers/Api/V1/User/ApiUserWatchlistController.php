@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1\User;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\UserWatchlistRequest;
+use App\Models\User;
 use App\Models\Watchlist;
 use Illuminate\Http\Request;
 use Spatie\Fractalistic\ArraySerializer;
@@ -47,10 +48,19 @@ class ApiUserWatchlistController extends Controller
      */
     public function store(UserWatchlistRequest $request)
     {
-        Watchlist::create(
+        $watchlist = Watchlist::make(
             $request->validated()
         );
-        return [];
+
+        /** @var User $user */
+        $user = auth()->user();
+
+        $user->watchlists()->save($watchlist);
+
+        return [
+            'id' => $watchlist->id,
+            'name' => $watchlist->name,
+        ];
     }
 
     /**
@@ -84,12 +94,16 @@ class ApiUserWatchlistController extends Controller
      */
     public function update(UserWatchlistRequest $request, $id)
     {
-        $watchlist = Watchlist::findOrFail($id);
+        $watchlist = Watchlist::where('user_id','=',auth()->id())->findOrFail($id);
 
         $watchlist->update(
             $request->validated()
         );
-        return [];
+
+        return [
+            'id' => $watchlist->id,
+            'name' => $watchlist->name,
+        ];
     }
 
     /**
