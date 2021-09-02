@@ -26,7 +26,9 @@ class ApiUserExchangeController extends Controller
 
     public function symbolsSelectBoxList(Request $request)
     {
-        $symbols = ExchangeManager::getExchange($request->input('exchange'))->getSymbols();
+        $exchange = Exchange::findOrFail($request->input('exchange'));
+
+        $symbols = ExchangeManager::getExchange($exchange->name)->getSymbols();
 
         if(!count($symbols)) return $symbols;
 
