@@ -22,5 +22,6 @@ function log_info($message)
 
 function fix_persian_word($word)
 {
-    return str_replace('ي','ی',$word);
+    $word = str_replace('ي','ی',$word);
+    return str_replace('ك','ک',$word);
 }
