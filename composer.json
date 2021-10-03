@@ -17,6 +17,7 @@
         "guzzlehttp/psr7": "1.*",
         "irazasyed/telegram-bot-sdk": "^3.4.1",
         "laracasts/utilities": "dev-master",
+        "laravel-notification-channels/discord": "^1.3",
         "laravel-notification-channels/telegram": "^0.5.1",
         "laravel/framework": "^8.40",
         "laravel/helpers": "^1.0",

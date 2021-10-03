@@ -65,4 +65,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(WatchlistItem::class,'user_id');
     }
+
+    public function routeNotificationForDiscord()
+    {
+        // discord channel id
+        return config("discord-channel.channel_id");
+    }
 }

@@ -8,6 +8,8 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Messages\SlackMessage;
 use Illuminate\Notifications\Notification;
+use NotificationChannels\Discord\DiscordChannel;
+use NotificationChannels\Discord\DiscordMessage;
 use NotificationChannels\Telegram\TelegramChannel;
 use NotificationChannels\Telegram\TelegramMessage;
 
@@ -41,7 +43,7 @@ class AlertActivatedNotification extends Notification
      */
     public function via($notifiable)
     {
-        return [TelegramChannel::class];
+        return [TelegramChannel::class, DiscordChannel::class];
     }
 
     /**
@@ -93,5 +95,14 @@ class AlertActivatedNotification extends Notification
         return TelegramMessage::create()
             ->to($notifiable->telegram_user_id)
             ->content($content);
+    }
+
+    public function toDiscord($notifiable)
+    {
+        $content = "\n #".$this->alert->symbol.self::OPERATORS[$this->alert->operator].((float) $this->alert->price);
+        $content .= ($this->alert->details ? "\n \n {$this->alert->details}" : '');
+        $content .= is_array($this->alert->charts) && count($this->alert->charts) ?  "\n \n \n".$this->alert->charts[0] : '';
+
+        return DiscordMessage::create($content);
     }
 }
